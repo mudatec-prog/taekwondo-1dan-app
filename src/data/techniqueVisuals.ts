@@ -93,6 +93,34 @@ export const techniqueVisuals: TechniqueVisual[] = [
       "Foco claro al terminar la defensa",
     ],
   },
+  {
+    techniqueId: "jansonnal-momtong-bakat-maki",
+    imageUrl: "/techniques/jansonnal-momtong-bakat-maki-v1.png",
+    title: "Jansonnal Momtong Bakat Maki",
+    subtitle: "Defensa media exterior con canto de una mano",
+    reviewStatus: "needs-master-review",
+    reviewNote: "Prototipo con canto de mano y puno contrario recogido; validar trayectoria exterior y angulo final con maestro.",
+    cues: [
+      "Mano abierta en sonnal, dedos juntos y firmes",
+      "Defensa hacia fuera a nivel medio",
+      "Puno contrario recogido en cintura",
+      "Muneca recta, codo controlado y mirada al frente",
+    ],
+  },
+  {
+    techniqueId: "batagson-momtong-maki",
+    imageUrl: "/techniques/batagson-momtong-maki-v1.png",
+    title: "Batagson Momtong Maki",
+    subtitle: "Defensa media con base de la palma",
+    reviewStatus: "needs-master-review",
+    reviewNote: "Prototipo con mano abierta y puno contrario recogido; validar trayectoria y angulo exacto con maestro.",
+    cues: [
+      "Mano de defensa abierta, usando base de la palma",
+      "Bloqueo a nivel medio del tronco",
+      "Puno contrario recogido en cintura",
+      "Cadera estable y mirada al objetivo",
+    ],
+  },
 ];
 
 export function getTechniqueVisual(techniqueId: string) {
