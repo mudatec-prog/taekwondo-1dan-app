@@ -79,6 +79,15 @@ export function SyllabusBlock({ blocks, flashcards }: SyllabusBlockProps) {
                 <p className="text-sm font-bold uppercase tracking-[0.22em] text-combat-red">Tecnica visual</p>
                 <h3 className="mt-1 text-2xl font-black uppercase">{selectedVisual.title}</h3>
                 <p className="text-white/62">{selectedVisual.subtitle}</p>
+                <p
+                  className={`mt-2 inline-block rounded px-2 py-1 text-xs font-black uppercase ${
+                    selectedVisual.reviewStatus === "reviewed"
+                      ? "bg-emerald-400/15 text-emerald-100"
+                      : "bg-combat-red/20 text-red-100"
+                  }`}
+                >
+                  {selectedVisual.reviewStatus === "reviewed" ? "Revisada" : "Pendiente maestro"}
+                </p>
               </div>
               <button
                 aria-label="Cerrar visual"
@@ -98,6 +107,10 @@ export function SyllabusBlock({ blocks, flashcards }: SyllabusBlockProps) {
                 />
               </div>
               <div className="space-y-3">
+                <div className="rounded border border-white/10 bg-combat-black p-3">
+                  <p className="text-xs font-bold uppercase text-white/45">Estado tecnico</p>
+                  <p className="mt-1 text-sm font-bold text-white/78">{selectedVisual.reviewNote}</p>
+                </div>
                 {selectedVisual.cues.map((cue) => (
                   <div key={cue} className="rounded border border-white/10 bg-white/[0.04] p-3">
                     <p className="text-sm font-bold text-white/78">{cue}</p>
