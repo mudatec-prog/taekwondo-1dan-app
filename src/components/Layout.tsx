@@ -73,7 +73,7 @@ export function Layout({ activeView, onViewChange, children }: LayoutProps) {
               type="button"
             >
               <Icon size={20} aria-hidden />
-              <span className="mt-1 hidden min-[390px]:block">{label}</span>
+              <span className="mt-1 hidden max-w-full truncate min-[430px]:block">{label}</span>
             </button>
           ))}
         </div>

@@ -114,23 +114,24 @@ export function Dictionary() {
 
       <div className="grid gap-3 sm:grid-cols-2">
         {results.map((entry) => (
-          <article key={entry.id} className="rounded border border-white/10 bg-white/[0.04] p-4">
-            <div className="flex items-start justify-between gap-3">
-              <div>
+          <article key={entry.id} className="min-w-0 rounded border border-white/10 bg-white/[0.04] p-4">
+            <div className="flex min-w-0 flex-col gap-3">
+              <div className="min-w-0">
                 <h3 className="text-xl font-black">{entry.korean}</h3>
                 {entry.speech && <p className="mt-1 text-lg font-black text-combat-red">{entry.speech}</p>}
                 <p className="mt-1 text-white/75">{entry.spanish}</p>
               </div>
-              <div className="flex shrink-0 flex-col items-end gap-2">
+              <div className="grid gap-2 min-[420px]:grid-cols-[auto_1fr] min-[420px]:items-center">
                 <button
                   aria-label={`Reproducir ${entry.korean}`}
-                  className="tap-target grid w-12 place-items-center rounded border border-combat-red/45 bg-combat-red/15 text-red-100"
+                  className="tap-target flex w-full items-center justify-center gap-2 rounded border border-combat-red/45 bg-combat-red/15 px-3 py-3 font-black uppercase text-red-100 min-[420px]:w-auto"
                   onClick={() => speakKorean(entry.speech ?? entry.korean)}
                   type="button"
                 >
                   <Volume2 size={20} aria-hidden />
+                  <span>Escuchar</span>
                 </button>
-                <span className="rounded bg-combat-red/20 px-2 py-1 text-xs font-black uppercase text-red-100">
+                <span className="min-w-0 rounded bg-combat-red/20 px-2 py-2 text-center text-xs font-black uppercase text-red-100">
                   {entry.category}
                 </span>
               </div>
