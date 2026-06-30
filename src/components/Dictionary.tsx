@@ -76,7 +76,7 @@ export function Dictionary() {
                 <button
                   aria-label={`Reproducir ${entry.korean}`}
                   className="tap-target grid w-12 place-items-center rounded border border-combat-red/45 bg-combat-red/15 text-red-100"
-                  onClick={() => speakKorean(entry.korean)}
+                  onClick={() => speakKorean(entry.speech ?? entry.korean)}
                   type="button"
                 >
                   <Volume2 size={20} aria-hidden />

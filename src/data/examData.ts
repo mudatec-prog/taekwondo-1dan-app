@@ -14,6 +14,7 @@ export type Technique = {
   korean: string;
   spanish: string;
   notes?: string;
+  speech?: string;
 };
 
 export type SyllabusBlock = {

@@ -96,7 +96,7 @@ export function Flashcards({ flashcards, onMark, onReset }: FlashcardsProps) {
           <h3 className="mt-4 text-4xl font-black sm:text-6xl">{card.korean}</h3>
           <button
             className="tap-target mx-auto mt-5 rounded border border-combat-red/45 bg-combat-red/15 px-4 py-3 font-black uppercase text-red-100"
-            onClick={() => speakKorean(card.korean)}
+            onClick={() => speakKorean(card.speech ?? card.korean)}
             type="button"
           >
             <Volume2 className="inline" size={18} aria-hidden /> Escuchar
