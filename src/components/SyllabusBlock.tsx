@@ -1,4 +1,7 @@
+import { Image, X } from "lucide-react";
+import { useState } from "react";
 import type { SyllabusBlock as SyllabusBlockType } from "../data/examData";
+import { getTechniqueVisual, type TechniqueVisual } from "../data/techniqueVisuals";
 import type { FlashcardStatus } from "../hooks/useLocalProgress";
 
 type SyllabusBlockProps = {
@@ -7,6 +10,8 @@ type SyllabusBlockProps = {
 };
 
 export function SyllabusBlock({ blocks, flashcards }: SyllabusBlockProps) {
+  const [selectedVisual, setSelectedVisual] = useState<TechniqueVisual | null>(null);
+
   return (
     <section className="space-y-4">
       <div>
@@ -42,8 +47,22 @@ export function SyllabusBlock({ blocks, flashcards }: SyllabusBlockProps) {
                           : "border-white/10 bg-white/[0.03]"
                     }`}
                   >
-                    <p className="font-black">{item.korean}</p>
-                    <p className="mt-1 text-sm text-white/65">{item.spanish}</p>
+                    <div className="flex min-w-0 items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="break-words font-black">{item.korean}</p>
+                        <p className="mt-1 break-words text-sm text-white/65">{item.spanish}</p>
+                      </div>
+                      {getTechniqueVisual(item.id) && (
+                        <button
+                          className="tap-target flex shrink-0 items-center gap-1 rounded border border-combat-red/45 bg-combat-red/15 px-2 py-2 text-xs font-black uppercase text-red-100"
+                          onClick={() => setSelectedVisual(getTechniqueVisual(item.id) ?? null)}
+                          type="button"
+                        >
+                          <Image size={16} aria-hidden />
+                          Visual
+                        </button>
+                      )}
+                    </div>
                   </div>
                 );
               })}
@@ -51,6 +70,44 @@ export function SyllabusBlock({ blocks, flashcards }: SyllabusBlockProps) {
           </article>
         ))}
       </div>
+
+      {selectedVisual && (
+        <div className="fixed inset-0 z-40 grid place-items-end bg-black/70 p-3 backdrop-blur sm:place-items-center">
+          <article className="max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded border border-white/10 bg-combat-panel shadow-glow">
+            <div className="flex items-start justify-between gap-3 border-b border-white/10 p-4">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.22em] text-combat-red">Tecnica visual</p>
+                <h3 className="mt-1 text-2xl font-black uppercase">{selectedVisual.title}</h3>
+                <p className="text-white/62">{selectedVisual.subtitle}</p>
+              </div>
+              <button
+                aria-label="Cerrar visual"
+                className="tap-target grid w-12 shrink-0 place-items-center rounded border border-white/15 text-white"
+                onClick={() => setSelectedVisual(null)}
+                type="button"
+              >
+                <X size={22} aria-hidden />
+              </button>
+            </div>
+            <div className="grid gap-4 p-4 lg:grid-cols-[1fr_20rem]">
+              <div className="overflow-hidden rounded border border-white/10 bg-combat-black">
+                <img
+                  alt={`${selectedVisual.title} - ${selectedVisual.subtitle}`}
+                  className="h-auto w-full object-contain"
+                  src={selectedVisual.imageUrl}
+                />
+              </div>
+              <div className="space-y-3">
+                {selectedVisual.cues.map((cue) => (
+                  <div key={cue} className="rounded border border-white/10 bg-white/[0.04] p-3">
+                    <p className="text-sm font-bold text-white/78">{cue}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+        </div>
+      )}
     </section>
   );
 }
