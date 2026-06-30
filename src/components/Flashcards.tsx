@@ -1,8 +1,8 @@
 import { Eye, RotateCcw, Volume2, X } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { dictionary, keywordDictionary, positionDictionary } from "../data/dictionary";
 import type { FlashcardStatus } from "../hooks/useLocalProgress";
-import { speakKorean } from "../utils/speech";
+import { preloadKoreanVoices, speakKorean } from "../utils/speech";
 
 type FlashcardsProps = {
   flashcards: Record<string, FlashcardStatus>;
@@ -23,6 +23,10 @@ export function Flashcards({ flashcards, onMark, onReset }: FlashcardsProps) {
   const [revealed, setRevealed] = useState(false);
   const [deckId, setDeckId] = useState<DeckId>("keywords");
   const deck = deckId === "keywords" ? keywordDictionary : deckId === "positions" ? positionDictionary : dictionary;
+
+  useEffect(() => {
+    preloadKoreanVoices();
+  }, []);
 
   const studyQueue = useMemo(
     () =>
@@ -94,6 +98,7 @@ export function Flashcards({ flashcards, onMark, onReset }: FlashcardsProps) {
         <div className="my-8 min-h-48 rounded border border-white/10 bg-combat-black p-6 text-center">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-combat-red">El tribunal dice</p>
           <h3 className="mt-4 text-4xl font-black sm:text-6xl">{card.korean}</h3>
+          {card.speech && <p className="mt-3 text-3xl font-black text-combat-red">{card.speech}</p>}
           <button
             className="tap-target mx-auto mt-5 rounded border border-combat-red/45 bg-combat-red/15 px-4 py-3 font-black uppercase text-red-100"
             onClick={() => speakKorean(card.speech ?? card.korean)}

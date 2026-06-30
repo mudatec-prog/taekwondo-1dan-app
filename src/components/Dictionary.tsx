@@ -1,8 +1,9 @@
 import { Search, Volume2 } from "lucide-react";
+import { useEffect } from "react";
 import { useMemo, useState } from "react";
 import { dictionary } from "../data/dictionary";
 import { keyTermGroups, type KeyTerm } from "../data/keyTerms";
-import { speakKorean } from "../utils/speech";
+import { preloadKoreanVoices, speakKorean } from "../utils/speech";
 
 type DictionaryPhase = "keywords" | "techniques";
 type GroupFilter = "all" | KeyTerm["group"];
@@ -12,6 +13,10 @@ export function Dictionary() {
   const [phase, setPhase] = useState<DictionaryPhase>("keywords");
   const [groupFilter, setGroupFilter] = useState<GroupFilter>("all");
   const normalizedQuery = query.trim().toLowerCase();
+
+  useEffect(() => {
+    preloadKoreanVoices();
+  }, []);
 
   const results = useMemo(
     () =>
@@ -113,6 +118,7 @@ export function Dictionary() {
             <div className="flex items-start justify-between gap-3">
               <div>
                 <h3 className="text-xl font-black">{entry.korean}</h3>
+                {entry.speech && <p className="mt-1 text-lg font-black text-combat-red">{entry.speech}</p>}
                 <p className="mt-1 text-white/75">{entry.spanish}</p>
               </div>
               <div className="flex shrink-0 flex-col items-end gap-2">
