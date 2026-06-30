@@ -108,6 +108,20 @@ export const techniqueVisuals: TechniqueVisual[] = [
     ],
   },
   {
+    techniqueId: "sonnal-are-maki",
+    imageUrl: "/techniques/sonnal-are-maki-v1.png",
+    title: "Sonnal Are Maki",
+    subtitle: "Defensa baja con canto de mano",
+    reviewStatus: "needs-master-review",
+    reviewNote: "Prototipo con defensa baja de canto de mano; validar altura final, trayectoria y posicion con maestro.",
+    cues: [
+      "Mano abierta en sonnal, dedos juntos",
+      "Defensa baja hacia zona inferior",
+      "Puno contrario recogido en cintura",
+      "Centro bajo, base estable y foco claro",
+    ],
+  },
+  {
     techniqueId: "batagson-momtong-maki",
     imageUrl: "/techniques/batagson-momtong-maki-v1.png",
     title: "Batagson Momtong Maki",
