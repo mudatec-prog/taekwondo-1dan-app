@@ -4,7 +4,7 @@ import { keywordDictionary, techniqueDictionary, type DictionaryEntry } from "..
 import type { TribunalResult, TribunalStats } from "../hooks/useLocalProgress";
 import { preloadKoreanVoices, speakKorean } from "../utils/speech";
 
-type TribunalDeckId = "keywords" | "positions" | "defenses" | "attacks" | "kicks";
+type TribunalDeckId = "keywords" | "positions" | "defenses" | "attacks" | "kicks" | "weak";
 
 type TribunalModeProps = {
   stats: Record<string, TribunalStats>;
@@ -17,14 +17,28 @@ const decks: Array<{ id: TribunalDeckId; label: string; description: string }> =
   { id: "defenses", label: "Defensas", description: "Maki con manos" },
   { id: "attacks", label: "Ataques", description: "Gong Kiok con manos" },
   { id: "kicks", label: "Patadas", description: "Bal Kisul y Tuio basico" },
+  { id: "weak", label: "Fallos", description: "Repaso inteligente de lo que mas fallas" },
 ];
 
-function getDeckItems(deckId: TribunalDeckId) {
+const allTribunalItems = [...keywordDictionary, ...techniqueDictionary];
+
+function getBaseDeckItems(deckId: TribunalDeckId) {
   if (deckId === "keywords") return keywordDictionary;
   if (deckId === "positions") return techniqueDictionary.filter((entry) => entry.category === "Posiciones");
   if (deckId === "defenses") return techniqueDictionary.filter((entry) => entry.category === "Defensas con las manos");
   if (deckId === "attacks") return techniqueDictionary.filter((entry) => entry.category === "Ataques con las manos");
+  if (deckId === "weak") return [];
   return techniqueDictionary.filter((entry) => entry.category === "Tecnicas de pierna" || entry.category === "Patadas en salto");
+}
+
+function getWeakItems(stats: Record<string, TribunalStats>) {
+  return allTribunalItems
+    .filter((entry) => (stats[entry.id]?.wrong ?? 0) > 0)
+    .sort((a, b) => {
+      const aStats = stats[a.id] ?? { correct: 0, wrong: 0 };
+      const bStats = stats[b.id] ?? { correct: 0, wrong: 0 };
+      return bStats.wrong - bStats.correct - (aStats.wrong - aStats.correct);
+    });
 }
 
 function pickWeighted(items: DictionaryEntry[], stats: Record<string, TribunalStats>) {
@@ -41,8 +55,12 @@ function pickWeighted(items: DictionaryEntry[], stats: Record<string, TribunalSt
 
 export function TribunalMode({ stats, onRecordResult }: TribunalModeProps) {
   const [deckId, setDeckId] = useState<TribunalDeckId>("keywords");
-  const deckItems = useMemo(() => getDeckItems(deckId), [deckId]);
-  const [current, setCurrent] = useState<DictionaryEntry>(() => getDeckItems("keywords")[0]);
+  const weakItems = useMemo(() => getWeakItems(stats), [stats]);
+  const deckItems = useMemo(
+    () => (deckId === "weak" ? weakItems.length ? weakItems : keywordDictionary : getBaseDeckItems(deckId)),
+    [deckId, weakItems],
+  );
+  const [current, setCurrent] = useState<DictionaryEntry>(() => getBaseDeckItems("keywords")[0]);
   const [revealed, setRevealed] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
   const [isRunning, setIsRunning] = useState(false);
@@ -91,9 +109,9 @@ export function TribunalMode({ stats, onRecordResult }: TribunalModeProps) {
   }
 
   function selectDeck(nextDeck: TribunalDeckId) {
-    const nextItems = getDeckItems(nextDeck);
+    const nextItems = nextDeck === "weak" ? getWeakItems(stats) : getBaseDeckItems(nextDeck);
     setDeckId(nextDeck);
-    setCurrent(nextItems[0]);
+    setCurrent(nextItems[0] ?? keywordDictionary[0]);
     setRevealed(false);
     setSecondsLeft(5);
     setIsRunning(false);
@@ -114,7 +132,7 @@ export function TribunalMode({ stats, onRecordResult }: TribunalModeProps) {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-6">
         {decks.map((deck) => (
           <button
             key={deck.id}
@@ -136,6 +154,8 @@ export function TribunalMode({ stats, onRecordResult }: TribunalModeProps) {
         <Metric label="Aciertos" value={String(deckStats.correct)} />
         <Metric label="Precision" value={`${deckStats.accuracy}%`} />
       </div>
+
+      <WeaknessPanel items={weakItems.slice(0, 5)} stats={stats} onPractice={() => selectDeck("weak")} />
 
       <article className="rounded border border-white/10 bg-combat-panel p-5 shadow-glow sm:p-7">
         <div className="flex items-center justify-between gap-3 text-sm font-bold uppercase text-white/55">
@@ -199,9 +219,77 @@ export function TribunalMode({ stats, onRecordResult }: TribunalModeProps) {
           >
             <Shuffle className="inline" size={18} aria-hidden /> Nueva
           </button>
+          <button
+            className="tap-target rounded border border-white/15 px-4 py-3 font-black uppercase text-white sm:col-span-3"
+            onClick={() => {
+              setRevealed(false);
+              setSecondsLeft(5);
+              setIsRunning(true);
+            }}
+            type="button"
+          >
+            <RotateCcw className="inline" size={18} aria-hidden /> Repetir temporizador
+          </button>
         </div>
       </article>
     </section>
+  );
+}
+
+function WeaknessPanel({
+  items,
+  stats,
+  onPractice,
+}: {
+  items: DictionaryEntry[];
+  stats: Record<string, TribunalStats>;
+  onPractice: () => void;
+}) {
+  if (!items.length) {
+    return (
+      <article className="rounded border border-white/10 bg-combat-panel p-4">
+        <p className="text-sm font-black uppercase text-combat-red">Puntos debiles</p>
+        <p className="mt-2 text-sm text-white/60">
+          Todavia no hay fallos registrados. Cuando marques algun fallo, aparecera aqui para repasarlo.
+        </p>
+      </article>
+    );
+  }
+
+  return (
+    <article className="rounded border border-white/10 bg-combat-panel p-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm font-black uppercase text-combat-red">Puntos debiles</p>
+          <p className="mt-1 text-sm text-white/58">La app prioriza estas ordenes en el banco Fallos.</p>
+        </div>
+        <button
+          className="tap-target rounded bg-combat-red px-4 py-3 text-sm font-black uppercase text-white shadow-glow"
+          onClick={onPractice}
+          type="button"
+        >
+          Practicar fallos
+        </button>
+      </div>
+      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+        {items.map((item) => {
+          const itemStats = stats[item.id] ?? { correct: 0, wrong: 0 };
+          return (
+            <div key={item.id} className="rounded border border-white/10 bg-white/[0.04] p-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="break-words font-black">{item.korean}</p>
+                  <p className="mt-1 break-words text-sm text-white/62">{item.spanish}</p>
+                </div>
+                <span className="shrink-0 rounded bg-combat-red/20 px-2 py-1 text-xs font-black text-red-100">
+                  {itemStats.wrong} fallos
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </article>
   );
 }
 
