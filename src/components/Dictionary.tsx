@@ -1,23 +1,36 @@
 import { Search, Volume2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { dictionary } from "../data/dictionary";
+import { keyTermGroups, type KeyTerm } from "../data/keyTerms";
 import { speakKorean } from "../utils/speech";
 
 type DictionaryPhase = "keywords" | "techniques";
+type GroupFilter = "all" | KeyTerm["group"];
 
 export function Dictionary() {
   const [query, setQuery] = useState("");
   const [phase, setPhase] = useState<DictionaryPhase>("keywords");
+  const [groupFilter, setGroupFilter] = useState<GroupFilter>("all");
   const normalizedQuery = query.trim().toLowerCase();
 
   const results = useMemo(
     () =>
       dictionary.filter((entry) => {
         const text = `${entry.korean} ${entry.spanish} ${entry.category}`.toLowerCase();
-        return entry.phase === phase && text.includes(normalizedQuery);
+        const matchesPhase = entry.phase === phase;
+        const matchesSearch = text.includes(normalizedQuery);
+        const matchesGroup =
+          phase === "techniques" || groupFilter === "all" || entry.category === `Palabras clave - ${groupFilter}`;
+
+        return matchesPhase && matchesSearch && matchesGroup;
       }),
-    [normalizedQuery, phase],
+    [groupFilter, normalizedQuery, phase],
   );
+
+  function selectPhase(nextPhase: DictionaryPhase) {
+    setPhase(nextPhase);
+    setGroupFilter("all");
+  }
 
   return (
     <section className="space-y-4">
@@ -36,7 +49,7 @@ export function Dictionary() {
               ? "border-combat-red bg-combat-red text-white shadow-glow"
               : "border-white/10 bg-white/[0.04] text-white/75"
           }`}
-          onClick={() => setPhase("keywords")}
+          onClick={() => selectPhase("keywords")}
           type="button"
         >
           Palabras clave
@@ -47,12 +60,42 @@ export function Dictionary() {
               ? "border-combat-red bg-combat-red text-white shadow-glow"
               : "border-white/10 bg-white/[0.04] text-white/75"
           }`}
-          onClick={() => setPhase("techniques")}
+          onClick={() => selectPhase("techniques")}
           type="button"
         >
           Tecnicas
         </button>
       </div>
+
+      {phase === "keywords" && (
+        <div className="flex gap-2 overflow-x-auto pb-1">
+          <button
+            className={`tap-target shrink-0 rounded border px-3 py-2 text-xs font-black uppercase ${
+              groupFilter === "all"
+                ? "border-combat-red bg-combat-red text-white"
+                : "border-white/10 bg-white/[0.04] text-white/72"
+            }`}
+            onClick={() => setGroupFilter("all")}
+            type="button"
+          >
+            Todo
+          </button>
+          {keyTermGroups.map((group) => (
+            <button
+              key={group.id}
+              className={`tap-target shrink-0 rounded border px-3 py-2 text-xs font-black uppercase ${
+                groupFilter === group.id
+                  ? "border-combat-red bg-combat-red text-white"
+                  : "border-white/10 bg-white/[0.04] text-white/72"
+              }`}
+              onClick={() => setGroupFilter(group.id)}
+              type="button"
+            >
+              {group.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       <label className="flex items-center gap-3 rounded border border-white/10 bg-combat-panel px-4 py-3">
         <Search className="text-combat-red" size={22} aria-hidden />
