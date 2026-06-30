@@ -21,12 +21,12 @@ const navItems: Array<{ id: ViewId; label: string; icon: typeof Home }> = [
 
 export function Layout({ activeView, onViewChange, children }: LayoutProps) {
   return (
-    <div className="min-h-screen pb-28 text-combat-white md:pb-8">
+    <div className="min-h-screen w-full overflow-x-hidden pb-28 text-combat-white md:pb-8">
       <header className="border-b border-white/10 bg-combat-black/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
-          <div>
+          <div className="min-w-0">
             <p className="text-xs font-bold uppercase tracking-[0.28em] text-combat-red">1er DAN</p>
-            <h1 className="mt-1 text-2xl font-black uppercase sm:text-3xl">Taekwondo Exam Trainer</h1>
+            <h1 className="mt-1 text-2xl font-black uppercase leading-tight sm:text-3xl">Taekwondo Exam Trainer</h1>
           </div>
           <div className="hidden rounded border border-combat-red/40 px-3 py-2 text-right text-sm font-bold uppercase text-white sm:block">
             Kukkiwon Mode
@@ -34,7 +34,7 @@ export function Layout({ activeView, onViewChange, children }: LayoutProps) {
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-6xl gap-6 px-4 py-6 sm:px-6 md:grid-cols-[13rem_1fr]">
+      <div className="mx-auto grid w-full max-w-6xl min-w-0 gap-6 px-4 py-6 sm:px-6 md:grid-cols-[13rem_1fr]">
         <nav className="hidden md:block">
           <div className="sticky top-6 space-y-2">
             {navItems.map(({ id, label, icon: Icon }) => (
@@ -55,16 +55,16 @@ export function Layout({ activeView, onViewChange, children }: LayoutProps) {
           </div>
         </nav>
 
-        <main>{children}</main>
+        <main className="min-w-0">{children}</main>
       </div>
 
-      <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-white/10 bg-combat-black/95 px-2 py-2 backdrop-blur md:hidden">
-        <div className="grid grid-cols-7 gap-1">
+      <nav className="fixed inset-x-0 bottom-0 z-20 max-w-full overflow-hidden border-t border-white/10 bg-combat-black/95 px-1 py-2 backdrop-blur md:hidden">
+        <div className="grid min-w-0 grid-cols-7 gap-1">
           {navItems.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               aria-label={label}
-              className={`tap-target flex flex-col items-center justify-center rounded border px-1 py-2 text-[0.65rem] font-bold uppercase ${
+              className={`tap-target flex min-w-0 flex-col items-center justify-center rounded border px-0.5 py-2 text-[0.65rem] font-bold uppercase ${
                 activeView === id
                   ? "border-combat-red bg-combat-red text-white"
                   : "border-transparent text-white/70"

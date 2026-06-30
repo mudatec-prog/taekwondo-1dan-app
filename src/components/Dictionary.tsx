@@ -38,8 +38,8 @@ export function Dictionary() {
   }
 
   return (
-    <section className="space-y-4">
-      <div>
+    <section className="min-w-0 max-w-full overflow-hidden space-y-4">
+      <div className="min-w-0">
         <p className="text-sm font-bold uppercase tracking-[0.22em] text-combat-red">Coreano - Espanol</p>
         <h2 className="mt-1 text-3xl font-black uppercase">Diccionario tecnico</h2>
         <p className="mt-2 max-w-2xl text-sm text-white/62">
@@ -47,7 +47,7 @@ export function Dictionary() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid min-w-0 grid-cols-2 gap-2">
         <button
           className={`tap-target rounded border px-3 py-3 font-black uppercase ${
             phase === "keywords"
@@ -73,7 +73,7 @@ export function Dictionary() {
       </div>
 
       {phase === "keywords" && (
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="-mx-4 flex max-w-[calc(100vw-0px)] gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:max-w-full sm:px-0">
           <button
             className={`tap-target shrink-0 rounded border px-3 py-2 text-xs font-black uppercase ${
               groupFilter === "all"
@@ -102,24 +102,24 @@ export function Dictionary() {
         </div>
       )}
 
-      <label className="flex items-center gap-3 rounded border border-white/10 bg-combat-panel px-4 py-3">
+      <label className="flex min-w-0 items-center gap-3 rounded border border-white/10 bg-combat-panel px-4 py-3">
         <Search className="text-combat-red" size={22} aria-hidden />
         <input
-          className="w-full bg-transparent text-base font-semibold text-white placeholder:text-white/35"
+          className="min-w-0 w-full bg-transparent text-base font-semibold text-white placeholder:text-white/35"
           placeholder={phase === "keywords" ? "Buscar defensa, giro, alto..." : "Buscar tecnica, bloque o significado"}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
       </label>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid min-w-0 gap-3 sm:grid-cols-2">
         {results.map((entry) => (
           <article key={entry.id} className="min-w-0 rounded border border-white/10 bg-white/[0.04] p-4">
             <div className="flex min-w-0 flex-col gap-3">
               <div className="min-w-0">
-                <h3 className="text-xl font-black">{entry.korean}</h3>
+                <h3 className="break-words text-xl font-black">{entry.korean}</h3>
                 {entry.speech && <p className="mt-1 text-lg font-black text-combat-red">{entry.speech}</p>}
-                <p className="mt-1 text-white/75">{entry.spanish}</p>
+                <p className="mt-1 break-words text-white/75">{entry.spanish}</p>
               </div>
               <div className="grid gap-2 min-[420px]:grid-cols-[auto_1fr] min-[420px]:items-center">
                 <button
@@ -131,7 +131,7 @@ export function Dictionary() {
                   <Volume2 size={20} aria-hidden />
                   <span>Escuchar</span>
                 </button>
-                <span className="min-w-0 rounded bg-combat-red/20 px-2 py-2 text-center text-xs font-black uppercase text-red-100">
+                <span className="min-w-0 break-words rounded bg-combat-red/20 px-2 py-2 text-center text-xs font-black uppercase text-red-100">
                   {entry.category}
                 </span>
               </div>
