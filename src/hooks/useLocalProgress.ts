@@ -1,11 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
 
 export type FlashcardStatus = "known" | "unknown";
+export type TribunalResult = "correct" | "wrong";
+
+export type TribunalStats = {
+  correct: number;
+  wrong: number;
+  lastResult?: TribunalResult;
+};
 
 type ProgressState = {
   flashcards: Record<string, FlashcardStatus>;
   checklist: Record<string, boolean>;
   poomsae: Record<string, Record<string, boolean>>;
+  tribunal: Record<string, TribunalStats>;
 };
 
 const STORAGE_KEY = "taekwondo-1dan-progress";
@@ -14,6 +22,7 @@ const initialProgress: ProgressState = {
   flashcards: {},
   checklist: {},
   poomsae: {},
+  tribunal: {},
 };
 
 function readProgress(): ProgressState {
@@ -63,6 +72,22 @@ export function useLocalProgress() {
             },
           },
         }));
+      },
+      recordTribunalResult(id: string, result: TribunalResult) {
+        setProgress((current) => {
+          const currentStats = current.tribunal[id] ?? { correct: 0, wrong: 0 };
+          return {
+            ...current,
+            tribunal: {
+              ...current.tribunal,
+              [id]: {
+                correct: currentStats.correct + (result === "correct" ? 1 : 0),
+                wrong: currentStats.wrong + (result === "wrong" ? 1 : 0),
+                lastResult: result,
+              },
+            },
+          };
+        });
       },
     }),
     [],

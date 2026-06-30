@@ -1,7 +1,7 @@
-import { BookOpen, ClipboardCheck, Dumbbell, Home, Layers, Map, Search } from "lucide-react";
+import { BookOpen, ClipboardCheck, Dumbbell, Home, Layers, Map, Search, Siren } from "lucide-react";
 import type { ReactNode } from "react";
 
-export type ViewId = "dashboard" | "dictionary" | "flashcards" | "syllabus" | "poomsae" | "exam" | "checklist";
+export type ViewId = "dashboard" | "dictionary" | "flashcards" | "tribunal" | "syllabus" | "poomsae" | "exam" | "checklist";
 
 type LayoutProps = {
   activeView: ViewId;
@@ -13,6 +13,7 @@ const navItems: Array<{ id: ViewId; label: string; icon: typeof Home }> = [
   { id: "dashboard", label: "Inicio", icon: Home },
   { id: "dictionary", label: "Diccionario", icon: Search },
   { id: "flashcards", label: "Flashcards", icon: Layers },
+  { id: "tribunal", label: "Tribunal", icon: Siren },
   { id: "syllabus", label: "Temario", icon: BookOpen },
   { id: "poomsae", label: "Poomsae", icon: Map },
   { id: "exam", label: "Examen", icon: Dumbbell },
@@ -59,7 +60,7 @@ export function Layout({ activeView, onViewChange, children }: LayoutProps) {
       </div>
 
       <nav className="fixed inset-x-0 bottom-0 z-20 max-w-full overflow-hidden border-t border-white/10 bg-combat-black/95 px-1 py-2 backdrop-blur md:hidden">
-        <div className="grid min-w-0 grid-cols-7 gap-1">
+        <div className="grid min-w-0 grid-cols-8 gap-1">
           {navItems.map(({ id, label, icon: Icon }) => (
             <button
               key={id}

@@ -7,6 +7,7 @@ import { Flashcards } from "./components/Flashcards";
 import { Layout, type ViewId } from "./components/Layout";
 import { PoomsaeTrainer } from "./components/PoomsaeTrainer";
 import { SyllabusBlock } from "./components/SyllabusBlock";
+import { TribunalMode } from "./components/TribunalMode";
 import { syllabusBlocks } from "./data/examData";
 import { useLocalProgress } from "./hooks/useLocalProgress";
 
@@ -19,6 +20,7 @@ export default function App() {
     toggleChecklist,
     resetChecklist,
     togglePoomsaeStep,
+    recordTribunalResult,
   } = useLocalProgress();
 
   return (
@@ -37,6 +39,12 @@ export default function App() {
           flashcards={progress.flashcards}
           onMark={markFlashcard}
           onReset={resetFlashcards}
+        />
+      )}
+      {activeView === "tribunal" && (
+        <TribunalMode
+          stats={progress.tribunal}
+          onRecordResult={recordTribunalResult}
         />
       )}
       {activeView === "syllabus" && (
