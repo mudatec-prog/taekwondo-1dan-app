@@ -16,19 +16,13 @@ const studyModes: Array<{ id: StudyMode; label: string }> = [
 ];
 
 const gridSize = 5;
-const poomsaeStanceVisualMap: Record<string, string> = {
-  "Ap Seogi": "ap-sogui",
-  "Ap Sogui": "ap-sogui",
-  "Ap Kubi": "ap-kubi-sogui",
-  "Ap Kubi Sogui": "ap-kubi-sogui",
-  "Chuchum Sogui": "chuchum-sogui",
-  "Tuit Kubi": "tuit-kubi-sogui",
-  "Tuit Kubi Sogui": "tuit-kubi-sogui",
-  "Bom Sogui": "bom-sogui",
-  "Moa Sogui": "moa-sogui",
-  "Naranji Sogui": "naranji-sogui",
-  "Pionji Sogui": "pionji-sogui",
-  "Charyot Sogui": "charyot-sogui",
+const poomsaeTechniqueVisualMap: Record<string, string[]> = {
+  "Are Maki": ["are-maki"],
+  "Momtong An Maki": ["momtong-an-maki"],
+  "Olgul Maki": ["olgul-maki"],
+  "Momtong Baro Jirugui": ["momtong-baro-jirugui"],
+  "Momtong Bande Jirugui": ["momtong-bande-jirugui"],
+  "Ap Chagui + Momtong Jirugui": ["ap-chagui"],
 };
 
 export function PoomsaeTrainer({ masteredSteps, onToggleStep }: PoomsaeTrainerProps) {
@@ -190,7 +184,7 @@ function MovementCard({
   onToggleStep: (poomsaeId: string, stepId: string) => void;
 }) {
   const isMemory = mode === "memoria";
-  const stanceVisual = getStanceVisual(step.stance);
+  const visualReferences = getMovementVisuals(step);
 
   return (
     <div>
@@ -211,7 +205,7 @@ function MovementCard({
           </div>
         ) : (
           <div className="space-y-3">
-            {stanceVisual && <StanceVisualCard visual={stanceVisual} stance={step.stance} />}
+            {visualReferences.length > 0 && <MovementVisualReferences visuals={visualReferences} />}
             {(mode === "coreano" || mode === "traduccion") && (
               <>
                 <Info label="Coreano" value={step.korean} highlight={mode === "coreano"} />
@@ -253,33 +247,37 @@ function MovementCard({
   );
 }
 
-function StanceVisualCard({ visual, stance }: { visual: TechniqueVisual; stance: string }) {
+function MovementVisualReferences({ visuals }: { visuals: TechniqueVisual[] }) {
   return (
     <div className="overflow-hidden rounded border border-white/10 bg-white/[0.04]">
       <div className="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
         <div>
-          <p className="text-xs font-bold uppercase text-white/45">Posicion del movimiento</p>
-          <p className="mt-1 text-sm font-black uppercase text-white">{stance}</p>
+          <p className="text-xs font-bold uppercase text-white/45">Referencia visual de la tecnica</p>
+          <p className="mt-1 text-sm font-black uppercase text-white">Solo apoyo, no movimiento completo</p>
         </div>
         <span className="rounded border border-combat-red/40 bg-combat-red/15 px-2 py-1 text-[0.65rem] font-black uppercase text-white">
-          Sogui
+          Tecnica
         </span>
       </div>
-      <div className="grid gap-0 sm:grid-cols-[0.78fr_1fr]">
-        <div className="aspect-[4/5] bg-combat-black sm:aspect-auto">
-          <img className="h-full w-full object-cover object-top" src={visual.imageUrl} alt={visual.title} loading="lazy" />
-        </div>
-        <div className="space-y-2 p-3">
-          <p className="text-lg font-black uppercase text-white">{visual.title}</p>
-          <p className="text-sm font-bold text-white/62">{visual.subtitle}</p>
-          <div className="grid gap-2">
-            {visual.cues.slice(0, 3).map((cue) => (
-              <p key={cue} className="rounded border border-white/10 bg-combat-black px-2 py-2 text-xs font-bold text-white/62">
-                {cue}
-              </p>
-            ))}
+      <div className="grid gap-3 p-3">
+        {visuals.map((visual) => (
+          <div key={visual.techniqueId} className="grid overflow-hidden rounded border border-white/10 bg-combat-black sm:grid-cols-[0.7fr_1fr]">
+            <div className="aspect-[4/5] bg-combat-black sm:aspect-auto">
+              <img className="h-full w-full object-cover object-top" src={visual.imageUrl} alt={visual.title} loading="lazy" />
+            </div>
+            <div className="space-y-2 p-3">
+              <p className="text-lg font-black uppercase text-white">{visual.title}</p>
+              <p className="text-sm font-bold text-white/62">{visual.subtitle}</p>
+              <div className="grid gap-2">
+                {visual.cues.slice(0, 2).map((cue) => (
+                  <p key={cue} className="rounded border border-white/10 bg-white/[0.04] px-2 py-2 text-xs font-bold text-white/62">
+                    {cue}
+                  </p>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
@@ -478,10 +476,10 @@ function directionArrowPath(degrees: number) {
   return "M -12 5 L 0 -12 L 12 5 M 0 -12 V 18";
 }
 
-function getStanceVisual(stance: string) {
-  const visualId = poomsaeStanceVisualMap[stance];
-
-  return visualId ? getTechniqueVisual(visualId) : undefined;
+function getMovementVisuals(step: PoomsaeStep) {
+  return (poomsaeTechniqueVisualMap[step.technique] ?? [])
+    .map((visualId) => getTechniqueVisual(visualId))
+    .filter((visual): visual is TechniqueVisual => Boolean(visual));
 }
 
 function OrientationBadge({ degrees }: { degrees: number }) {
