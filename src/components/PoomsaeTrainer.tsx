@@ -1,5 +1,5 @@
-import { CheckCircle2, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
-import { useMemo, useState } from "react";
+import { CheckCircle2, ChevronLeft, ChevronRight, Pause, Play, RotateCcw } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { poomsaeLibrary, type Poomsae, type PoomsaeStep, type StudyMode } from "../data/poomsaeData";
 
 type PoomsaeTrainerProps = {
@@ -15,28 +15,69 @@ const studyModes: Array<{ id: StudyMode; label: string }> = [
 ];
 
 const gridSize = 5;
+const playbackMs = 1350;
 
 export function PoomsaeTrainer({ masteredSteps, onToggleStep }: PoomsaeTrainerProps) {
   const [selectedPoomsaeId, setSelectedPoomsaeId] = useState(poomsaeLibrary[0].id);
   const [stepIndex, setStepIndex] = useState(0);
   const [studyMode, setStudyMode] = useState<StudyMode>("coreano");
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const poomsae = poomsaeLibrary.find((item) => item.id === selectedPoomsaeId) ?? poomsaeLibrary[0];
   const currentStep = poomsae.steps[stepIndex];
   const poomsaeProgress = getPoomsaeProgress(poomsae, masteredSteps[poomsae.id] ?? {});
   const activePath = useMemo(() => poomsae.steps.slice(0, stepIndex + 1), [poomsae.steps, stepIndex]);
 
+  useEffect(() => {
+    setIsPlaying(false);
+  }, [selectedPoomsaeId]);
+
+  useEffect(() => {
+    if (!isPlaying || !poomsae.steps.length) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setStepIndex((current) => {
+        if (current >= poomsae.steps.length - 1) {
+          setIsPlaying(false);
+          return current;
+        }
+
+        return current + 1;
+      });
+    }, playbackMs);
+
+    return () => window.clearInterval(timer);
+  }, [isPlaying, poomsae.steps.length]);
+
   function selectPoomsae(id: string) {
     setSelectedPoomsaeId(id);
     setStepIndex(0);
+    setIsPlaying(false);
   }
 
   function goNext() {
+    setIsPlaying(false);
     setStepIndex((current) => Math.min(current + 1, poomsae.steps.length - 1));
   }
 
   function goPrevious() {
+    setIsPlaying(false);
     setStepIndex((current) => Math.max(current - 1, 0));
+  }
+
+  function resetAnimation() {
+    setIsPlaying(false);
+    setStepIndex(0);
+  }
+
+  function togglePlayback() {
+    if (stepIndex === poomsae.steps.length - 1) {
+      setStepIndex(0);
+    }
+
+    setIsPlaying((current) => !current);
   }
 
   return (
@@ -99,42 +140,28 @@ export function PoomsaeTrainer({ masteredSteps, onToggleStep }: PoomsaeTrainerPr
               </div>
               <button
                 className="tap-target rounded border border-white/15 px-3 py-2 text-sm font-black uppercase text-white"
-                onClick={() => setStepIndex(0)}
+                onClick={resetAnimation}
                 type="button"
               >
                 <RotateCcw className="inline" size={16} aria-hidden /> Inicio
               </button>
             </div>
 
-            <div className="mt-4 aspect-square w-full rounded border border-white/10 bg-combat-black p-3">
-              <div className="grid h-full w-full grid-cols-5 grid-rows-5 gap-2">
-                {Array.from({ length: gridSize * gridSize }).map((_, cellIndex) => {
-                  const x = (cellIndex % gridSize) - 2;
-                  const y = 4 - Math.floor(cellIndex / gridSize);
-                  const stepsHere = activePath.filter((step) => step.x === x && step.y === y);
-                  const lastStep = stepsHere[stepsHere.length - 1];
-                  const isCurrent = currentStep.x === x && currentStep.y === y;
-                  const isStart = x === 0 && y === 0;
+            <PoomsaeAnimator poomsae={poomsae} currentStep={currentStep} activePath={activePath} />
 
-                  return (
-                    <div
-                      key={`${x}-${y}`}
-                      className={`relative grid place-items-center rounded border text-xs font-black ${
-                        isCurrent
-                          ? "border-combat-red bg-combat-red text-white shadow-glow"
-                          : stepsHere.length
-                            ? "border-white/35 bg-white/12 text-white"
-                            : isStart
-                              ? "border-white/20 bg-white/[0.06] text-white/45"
-                              : "border-white/5 bg-white/[0.025] text-white/20"
-                      }`}
-                    >
-                      {isStart && !lastStep && <span>START</span>}
-                      {lastStep && <StepMarker step={lastStep} isCurrent={isCurrent} />}
-                    </div>
-                  );
-                })}
+            <div className="mt-3 grid grid-cols-[1fr_auto] gap-3">
+              <div className="rounded border border-white/10 bg-combat-black px-3 py-2">
+                <p className="text-xs font-bold uppercase text-white/45">Animacion</p>
+                <p className="mt-1 text-sm font-black uppercase text-white">{isPlaying ? "Reproduciendo" : "Paso a paso"}</p>
               </div>
+              <button
+                className="tap-target rounded bg-combat-red px-4 py-3 font-black uppercase text-white shadow-glow"
+                onClick={togglePlayback}
+                type="button"
+              >
+                {isPlaying ? <Pause className="inline" size={18} aria-hidden /> : <Play className="inline" size={18} aria-hidden />}{" "}
+                {isPlaying ? "Pausa" : "Play"}
+              </button>
             </div>
 
             <div className="mt-4 h-2 overflow-hidden rounded bg-white/10">
@@ -298,13 +325,115 @@ function SummaryMetric({ label, value }: { label: string; value: string }) {
   );
 }
 
-function StepMarker({ step, isCurrent }: { step: PoomsaeStep; isCurrent: boolean }) {
+function PoomsaeAnimator({
+  poomsae,
+  currentStep,
+  activePath,
+}: {
+  poomsae: Poomsae;
+  currentStep: PoomsaeStep;
+  activePath: PoomsaeStep[];
+}) {
+  const viewBox = 320;
+  const pathPoints = activePath.map((step) => toSvgPoint(step, viewBox));
+  const currentPoint = toSvgPoint(currentStep, viewBox);
+  const pathValue = pathPoints.map((point) => `${point.x},${point.y}`).join(" ");
+
   return (
-    <div className="flex flex-col items-center leading-none">
-      <span className={isCurrent ? "text-[0.65rem]" : "text-[0.6rem]"}>{step.orientationDegrees}deg</span>
-      <span className="mt-1 text-sm">{step.number}</span>
+    <div className="mt-4 overflow-hidden rounded border border-white/10 bg-combat-black">
+      <div className="relative aspect-square w-full">
+        <svg className="h-full w-full" viewBox={`0 0 ${viewBox} ${viewBox}`} role="img" aria-label={`Animacion ${poomsae.korean}`}>
+          <defs>
+            <pattern id="poomsae-grid" width="64" height="64" patternUnits="userSpaceOnUse">
+              <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+            </pattern>
+            <filter id="avatar-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feDropShadow dx="0" dy="0" stdDeviation="5" floodColor="#ef233c" floodOpacity="0.7" />
+            </filter>
+          </defs>
+
+          <rect width={viewBox} height={viewBox} fill="url(#poomsae-grid)" />
+          <line x1="160" y1="20" x2="160" y2="300" stroke="rgba(255,255,255,0.12)" strokeWidth="2" />
+          <line x1="20" y1="160" x2="300" y2="160" stroke="rgba(255,255,255,0.12)" strokeWidth="2" />
+
+          {pathPoints.length > 1 && <polyline points={pathValue} fill="none" stroke="#ef233c" strokeLinecap="round" strokeLinejoin="round" strokeWidth="7" opacity="0.9" />}
+
+          {poomsae.steps.map((step) => {
+            const point = toSvgPoint(step, viewBox);
+            const isDone = activePath.some((activeStep) => activeStep.id === step.id);
+            const isCurrent = step.id === currentStep.id;
+
+            return (
+              <g key={step.id}>
+                <circle
+                  cx={point.x}
+                  cy={point.y}
+                  r={isCurrent ? 15 : 11}
+                  fill={isCurrent ? "#ef233c" : isDone ? "rgba(255,255,255,0.86)" : "rgba(255,255,255,0.12)"}
+                  stroke={isCurrent ? "white" : "rgba(255,255,255,0.22)"}
+                  strokeWidth="2"
+                />
+                <text
+                  x={point.x}
+                  y={point.y + 4}
+                  textAnchor="middle"
+                  className="fill-combat-black text-[10px] font-black"
+                >
+                  {step.number}
+                </text>
+              </g>
+            );
+          })}
+
+          <g
+            filter="url(#avatar-glow)"
+            style={{
+              transform: `translate(${currentPoint.x}px, ${currentPoint.y}px) rotate(${currentStep.orientationDegrees}deg)`,
+              transformBox: "fill-box",
+              transformOrigin: "center",
+              transition: "transform 520ms ease",
+            }}
+          >
+            <circle cx="0" cy="0" r="18" fill="#111217" stroke="white" strokeWidth="3" />
+            <path d="M 0 -31 L 11 -9 L -11 -9 Z" fill="#ef233c" stroke="white" strokeWidth="2" />
+            <line x1="-18" y1="4" x2="-31" y2="21" stroke="white" strokeWidth="5" strokeLinecap="round" />
+            <line x1="18" y1="4" x2="31" y2="21" stroke="white" strokeWidth="5" strokeLinecap="round" />
+          </g>
+
+          <text x="160" y="20" textAnchor="middle" className="fill-white/40 text-[10px] font-black uppercase">
+            Frente
+          </text>
+          <text x="160" y="310" textAnchor="middle" className="fill-white/30 text-[10px] font-black uppercase">
+            Inicio
+          </text>
+        </svg>
+      </div>
+
+      <div className="border-t border-white/10 p-3">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold uppercase text-white/45">Movimiento animado</p>
+            <p className="mt-1 text-base font-black uppercase text-white">{currentStep.korean}</p>
+          </div>
+          <span className="rounded border border-combat-red bg-combat-red/15 px-3 py-2 text-sm font-black text-white">
+            {currentStep.orientationDegrees} deg
+          </span>
+        </div>
+        <p className="mt-2 text-sm font-bold text-white/60">{currentStep.footwork}</p>
+      </div>
     </div>
   );
+}
+
+function toSvgPoint(step: PoomsaeStep, viewBox: number) {
+  const safeX = step.x ?? 0;
+  const safeY = step.y ?? 0;
+  const stepSize = viewBox / (gridSize + 1);
+
+  return {
+    x: viewBox / 2 + safeX * stepSize,
+    y: viewBox - stepSize - safeY * stepSize,
+  };
 }
 
 function OrientationBadge({ degrees }: { degrees: number }) {
