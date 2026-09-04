@@ -9,36 +9,51 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-const navItems: Array<{ id: ViewId; label: string; icon: typeof Home }> = [
-  { id: "dashboard", label: "Inicio", icon: Home },
-  { id: "dictionary", label: "Diccionario", icon: Search },
-  { id: "flashcards", label: "Flashcards", icon: Layers },
-  { id: "tribunal", label: "Tribunal", icon: Siren },
-  { id: "syllabus", label: "Temario", icon: BookOpen },
+const primaryNavItems: Array<{ id: ViewId; label: string; icon: typeof Home }> = [
+  { id: "dashboard", label: "Hoy", icon: Home },
+  { id: "dictionary", label: "Coreano", icon: Search },
+  { id: "flashcards", label: "Practica", icon: Layers },
   { id: "poomsae", label: "Poomsae", icon: Map },
   { id: "exam", label: "Examen", icon: Dumbbell },
+];
+
+const secondaryNavItems: Array<{ id: ViewId; label: string; icon: typeof Home }> = [
+  { id: "syllabus", label: "Temario", icon: BookOpen },
+  { id: "tribunal", label: "Tribunal", icon: Siren },
   { id: "checklist", label: "Checklist", icon: ClipboardCheck },
 ];
 
 export function Layout({ activeView, onViewChange, children }: LayoutProps) {
+  const allDesktopItems = [...primaryNavItems, ...secondaryNavItems];
+
   return (
-    <div className="min-h-screen w-full overflow-x-hidden pb-28 text-combat-white md:pb-8">
-      <header className="border-b border-white/10 bg-combat-black/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
-          <div className="min-w-0">
-            <p className="text-xs font-bold uppercase tracking-[0.28em] text-combat-red">1er DAN</p>
-            <h1 className="mt-1 text-2xl font-black uppercase leading-tight sm:text-3xl">Taekwondo Exam Trainer</h1>
-          </div>
-          <div className="hidden rounded border border-combat-red/40 px-3 py-2 text-right text-sm font-bold uppercase text-white sm:block">
-            Kukkiwon Mode
+    <div className="min-h-dvh w-full overflow-x-hidden text-combat-white">
+      <header className="sticky top-0 z-20 border-b border-white/10 bg-combat-black/90 backdrop-blur md:static">
+        <div className="mx-auto flex w-full max-w-[680px] items-center justify-between px-4 py-4 md:max-w-6xl md:px-6">
+          <button
+            aria-label="Ir al inicio"
+            className="flex min-w-0 items-center gap-3 text-left"
+            onClick={() => onViewChange("dashboard")}
+            type="button"
+          >
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded border border-combat-red bg-combat-red text-lg font-black shadow-glow">
+              1D
+            </span>
+            <span className="min-w-0">
+              <span className="block text-[0.68rem] font-black uppercase tracking-[0.18em] text-combat-red">Black belt prep</span>
+              <span className="block truncate text-lg font-black uppercase leading-tight">Taekwondo 1er DAN</span>
+            </span>
+          </button>
+          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-sm font-black text-white/75">
+            JM
           </div>
         </div>
       </header>
 
-      <div className="mx-auto grid w-full max-w-6xl min-w-0 gap-6 px-4 py-6 sm:px-6 md:grid-cols-[13rem_1fr]">
+      <div className="mx-auto grid w-full max-w-[680px] min-w-0 gap-6 px-4 pb-[calc(6.8rem+env(safe-area-inset-bottom))] pt-5 md:max-w-6xl md:grid-cols-[13rem_1fr] md:px-6 md:pb-8 md:pt-6">
         <nav className="hidden md:block">
           <div className="sticky top-6 space-y-2">
-            {navItems.map(({ id, label, icon: Icon }) => (
+            {allDesktopItems.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 className={`tap-target flex w-full items-center gap-3 rounded border px-3 py-3 text-left text-sm font-bold uppercase transition ${
@@ -59,22 +74,22 @@ export function Layout({ activeView, onViewChange, children }: LayoutProps) {
         <main className="min-w-0">{children}</main>
       </div>
 
-      <nav className="fixed inset-x-0 bottom-0 z-20 max-w-full overflow-hidden border-t border-white/10 bg-combat-black/95 px-1 py-2 backdrop-blur md:hidden">
-        <div className="grid min-w-0 grid-cols-8 gap-1">
-          {navItems.map(({ id, label, icon: Icon }) => (
+      <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-[680px] overflow-hidden border-t border-white/10 bg-combat-black/96 px-2 pb-[calc(0.55rem+env(safe-area-inset-bottom))] pt-2 backdrop-blur md:hidden">
+        <div className="grid min-w-0 grid-cols-5 gap-1.5">
+          {primaryNavItems.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               aria-label={label}
-              className={`tap-target flex min-w-0 flex-col items-center justify-center rounded border px-0.5 py-2 text-[0.65rem] font-bold uppercase ${
+              className={`tap-target flex min-w-0 flex-col items-center justify-center rounded border px-1 py-2 text-[0.65rem] font-black uppercase ${
                 activeView === id
-                  ? "border-combat-red bg-combat-red text-white"
-                  : "border-transparent text-white/70"
+                  ? "border-combat-red bg-combat-red text-white shadow-glow"
+                  : "border-transparent text-white/64"
               }`}
               onClick={() => onViewChange(id)}
               type="button"
             >
               <Icon size={20} aria-hidden />
-              <span className="mt-1 hidden max-w-full truncate min-[430px]:block">{label}</span>
+              <span className="mt-1 max-w-full truncate">{label}</span>
             </button>
           ))}
         </div>

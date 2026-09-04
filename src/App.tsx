@@ -29,8 +29,13 @@ export default function App() {
         <Dashboard
           flashcards={progress.flashcards}
           checklist={progress.checklist}
+          onStartDictionary={() => setActiveView("dictionary")}
           onStartFlashcards={() => setActiveView("flashcards")}
+          onStartPoomsae={() => setActiveView("poomsae")}
           onStartExam={() => setActiveView("exam")}
+          onOpenSyllabus={() => setActiveView("syllabus")}
+          onOpenTribunal={() => setActiveView("tribunal")}
+          onOpenChecklist={() => setActiveView("checklist")}
         />
       )}
       {activeView === "dictionary" && <Dictionary />}
