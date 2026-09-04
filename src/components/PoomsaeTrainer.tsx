@@ -53,9 +53,9 @@ export function PoomsaeTrainer({ masteredSteps, onToggleStep }: PoomsaeTrainerPr
   }
 
   return (
-    <section className="space-y-4">
+    <section className="min-w-0 space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+        <div className="min-w-0">
           <p className="text-sm font-bold uppercase tracking-[0.22em] text-combat-red">Poomsae visual</p>
           <h2 className="mt-1 text-3xl font-black uppercase">{poomsae.korean}</h2>
           <p className="mt-2 max-w-2xl text-sm text-white/62">{poomsae.meaning}</p>
@@ -188,10 +188,10 @@ function MovementCard({
 
   return (
     <div>
-      <div className="flex items-start justify-between gap-4">
-        <div>
+      <div className="flex min-w-0 items-start justify-between gap-4">
+        <div className="min-w-0">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-combat-red">Movimiento {step.number}</p>
-          <h3 className="mt-2 text-3xl font-black leading-tight sm:text-4xl">{step.korean}</h3>
+          <h3 className="mt-2 break-words text-3xl font-black leading-tight sm:text-4xl">{step.korean}</h3>
         </div>
         <OrientationBadge degrees={step.orientationDegrees} />
       </div>
@@ -494,7 +494,7 @@ function Info({ label, value, highlight = false }: { label: string; value: strin
   return (
     <div className={`rounded border p-3 ${highlight ? "border-combat-red bg-combat-red/15" : "border-white/10 bg-white/[0.04]"}`}>
       <p className="text-xs font-bold uppercase text-white/45">{label}</p>
-      <p className="mt-1 font-black text-white">{value}</p>
+      <p className="mt-1 break-words font-black text-white">{value}</p>
     </div>
   );
 }

@@ -11,7 +11,7 @@ export type TechniqueVisual = {
 export const techniqueVisuals: TechniqueVisual[] = [
   {
     techniqueId: "are-maki",
-    imageUrl: "/techniques/are-maki-v1.png",
+    imageUrl: "/techniques/are-maki-v1.webp",
     title: "Are Maki",
     subtitle: "Defensa baja",
     reviewStatus: "needs-master-review",
@@ -25,7 +25,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "momtong-an-maki",
-    imageUrl: "/techniques/momtong-an-maki-v1.png",
+    imageUrl: "/techniques/momtong-an-maki-v1.webp",
     title: "Momtong An Maki",
     subtitle: "Defensa media hacia dentro",
     reviewStatus: "needs-master-review",
@@ -39,7 +39,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "momtong-maki",
-    imageUrl: "/techniques/momtong-maki-v1.png",
+    imageUrl: "/techniques/momtong-maki-v1.webp",
     title: "Momtong Maki",
     subtitle: "Defensa media",
     reviewStatus: "needs-master-review",
@@ -53,7 +53,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "olgul-maki",
-    imageUrl: "/techniques/olgul-maki-v1.png",
+    imageUrl: "/techniques/olgul-maki-v1.webp",
     title: "Olgul Maki",
     subtitle: "Defensa alta",
     reviewStatus: "reviewed",
@@ -67,7 +67,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "momtong-bakat-maki",
-    imageUrl: "/techniques/momtong-bakat-maki-v1.png",
+    imageUrl: "/techniques/momtong-bakat-maki-v1.webp",
     title: "Momtong Bakat Maki",
     subtitle: "Defensa media hacia fuera",
     reviewStatus: "needs-master-review",
@@ -81,7 +81,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "sonnal-momtong-maki",
-    imageUrl: "/techniques/sonnal-momtong-maki-v1.png",
+    imageUrl: "/techniques/sonnal-momtong-maki-v1.webp",
     title: "Sonnal Momtong Maki",
     subtitle: "Defensa media con canto de mano",
     reviewStatus: "needs-master-review",
@@ -95,7 +95,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "jansonnal-momtong-bakat-maki",
-    imageUrl: "/techniques/jansonnal-momtong-bakat-maki-v1.png",
+    imageUrl: "/techniques/jansonnal-momtong-bakat-maki-v1.webp",
     title: "Jansonnal Momtong Bakat Maki",
     subtitle: "Defensa media exterior con canto de una mano",
     reviewStatus: "needs-master-review",
@@ -109,7 +109,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "sonnal-are-maki",
-    imageUrl: "/techniques/sonnal-are-maki-v1.png",
+    imageUrl: "/techniques/sonnal-are-maki-v1.webp",
     title: "Sonnal Are Maki",
     subtitle: "Defensa baja con canto de mano",
     reviewStatus: "needs-master-review",
@@ -123,7 +123,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "olgul-bakat-maki",
-    imageUrl: "/techniques/olgul-bakat-maki-v1.png",
+    imageUrl: "/techniques/olgul-bakat-maki-v1.webp",
     title: "Olgul Bakat Maki",
     subtitle: "Defensa alta hacia fuera",
     reviewStatus: "needs-master-review",
@@ -137,7 +137,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "gechio-are-maki",
-    imageUrl: "/techniques/gechio-are-maki-v1.png",
+    imageUrl: "/techniques/gechio-are-maki-v1.webp",
     title: "Gechio Are Maki",
     subtitle: "Defensa baja abriendo",
     reviewStatus: "needs-master-review",
@@ -151,7 +151,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "batagson-momtong-an-maki",
-    imageUrl: "/techniques/batagson-momtong-an-maki-v1.png",
+    imageUrl: "/techniques/batagson-momtong-an-maki-v1.webp",
     title: "Batagson Momtong An Maki",
     subtitle: "Defensa media interior con base de la palma",
     reviewStatus: "needs-master-review",
@@ -165,7 +165,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "goduro-batagson-momtong-an-maki",
-    imageUrl: "/techniques/goduro-batagson-momtong-an-maki-v1.png",
+    imageUrl: "/techniques/goduro-batagson-momtong-an-maki-v1.webp",
     title: "Goduro Batagson Momtong An Maki",
     subtitle: "Defensa media interior asistida con base de la palma",
     reviewStatus: "needs-master-review",
@@ -179,7 +179,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "gechio-momtong-maki",
-    imageUrl: "/techniques/gechio-momtong-maki-v1.png",
+    imageUrl: "/techniques/gechio-momtong-maki-v1.webp",
     title: "Gechio Momtong Maki",
     subtitle: "Defensa media abriendo",
     reviewStatus: "needs-master-review",
@@ -193,7 +193,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "okgoro-are-maki",
-    imageUrl: "/techniques/okgoro-are-maki-v1.png",
+    imageUrl: "/techniques/okgoro-are-maki-v1.webp",
     title: "Okgoro Are Maki",
     subtitle: "Defensa baja cruzada",
     reviewStatus: "needs-master-review",
@@ -207,7 +207,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "jansonnal-momtong-yop-maki",
-    imageUrl: "/techniques/jansonnal-momtong-yop-maki-v1.png",
+    imageUrl: "/techniques/jansonnal-momtong-yop-maki-v1.webp",
     title: "Jansonnal Momtong Yop Maki",
     subtitle: "Defensa lateral media con canto de una mano",
     reviewStatus: "needs-master-review",
@@ -221,7 +221,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "goduro-momtong-maki",
-    imageUrl: "/techniques/goduro-momtong-maki-v1.png",
+    imageUrl: "/techniques/goduro-momtong-maki-v1.webp",
     title: "Goduro Momtong Maki",
     subtitle: "Defensa media asistida",
     reviewStatus: "needs-master-review",
@@ -235,7 +235,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "goduro-are-maki",
-    imageUrl: "/techniques/goduro-are-maki-v1.png",
+    imageUrl: "/techniques/goduro-are-maki-v1.webp",
     title: "Goduro Are Maki",
     subtitle: "Defensa baja asistida",
     reviewStatus: "needs-master-review",
@@ -249,7 +249,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "batagson-momtong-maki",
-    imageUrl: "/techniques/batagson-momtong-maki-v1.png",
+    imageUrl: "/techniques/batagson-momtong-maki-v1.webp",
     title: "Batagson Momtong Maki",
     subtitle: "Defensa media con base de la palma",
     reviewStatus: "needs-master-review",
@@ -263,7 +263,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "momtong-bande-jirugui",
-    imageUrl: "/techniques/momtong-bande-jirugui-v1.png",
+    imageUrl: "/techniques/momtong-bande-jirugui-v1.webp",
     title: "Momtong Bande Jirugui",
     subtitle: "Puno medio en bande",
     reviewStatus: "needs-master-review",
@@ -272,7 +272,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "momtong-baro-jirugui",
-    imageUrl: "/techniques/momtong-baro-jirugui-v1.png",
+    imageUrl: "/techniques/momtong-baro-jirugui-v1.webp",
     title: "Momtong Baro Jirugui",
     subtitle: "Puno medio en baro",
     reviewStatus: "needs-master-review",
@@ -281,7 +281,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "olgul-bande-jirugui",
-    imageUrl: "/techniques/olgul-bande-jirugui-v1.png",
+    imageUrl: "/techniques/olgul-bande-jirugui-v1.webp",
     title: "Olgul Bande Jirugui",
     subtitle: "Puno alto en bande",
     reviewStatus: "needs-master-review",
@@ -290,7 +290,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "momtong-dubong-jirugui",
-    imageUrl: "/techniques/momtong-dubong-jirugui-v1.png",
+    imageUrl: "/techniques/momtong-dubong-jirugui-v1.webp",
     title: "Momtong Dubong Jirugui",
     subtitle: "Doble puno medio",
     reviewStatus: "needs-master-review",
@@ -299,7 +299,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "sonnal-an-chigui",
-    imageUrl: "/techniques/sonnal-an-chigui-v1.png",
+    imageUrl: "/techniques/sonnal-an-chigui-v1.webp",
     title: "Sonnal An Chigui",
     subtitle: "Golpe hacia dentro con canto de mano",
     reviewStatus: "needs-master-review",
@@ -308,7 +308,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "pioson-kut-seuo-chirugui",
-    imageUrl: "/techniques/pioson-kut-seuo-chirugui-v1.png",
+    imageUrl: "/techniques/pioson-kut-seuo-chirugui-v1.webp",
     title: "Pioson Kut Seuo Chirugui",
     subtitle: "Ataque vertical con punta de dedos",
     reviewStatus: "needs-master-review",
@@ -317,7 +317,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "dung-chumok-ape-chigui",
-    imageUrl: "/techniques/dung-chumok-ape-chigui-v1.png",
+    imageUrl: "/techniques/dung-chumok-ape-chigui-v1.webp",
     title: "Dung Chumok Ape Chigui",
     subtitle: "Golpe frontal con reverso del puno",
     reviewStatus: "needs-master-review",
@@ -326,7 +326,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "me-chumok-neryo-yop-chigui",
-    imageUrl: "/techniques/me-chumok-neryo-yop-chigui-v1.png",
+    imageUrl: "/techniques/me-chumok-neryo-yop-chigui-v1.webp",
     title: "Me Chumok Neryo Yop Chigui",
     subtitle: "Golpe lateral descendente de martillo",
     reviewStatus: "needs-master-review",
@@ -335,7 +335,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "palkup-dollio-chigui",
-    imageUrl: "/techniques/palkup-dollio-chigui-v1.png",
+    imageUrl: "/techniques/palkup-dollio-chigui-v1.webp",
     title: "Palkup Dollio Chigui",
     subtitle: "Golpe circular de codo",
     reviewStatus: "needs-master-review",
@@ -344,7 +344,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "du-checho-jirugui",
-    imageUrl: "/techniques/du-checho-jirugui-v1.png",
+    imageUrl: "/techniques/du-checho-jirugui-v1.webp",
     title: "Du Checho Jirugui",
     subtitle: "Doble puno girado hacia arriba",
     reviewStatus: "needs-master-review",
@@ -353,7 +353,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "dung-chumok-bakat-chigui",
-    imageUrl: "/techniques/dung-chumok-bakat-chigui-v1.png",
+    imageUrl: "/techniques/dung-chumok-bakat-chigui-v1.webp",
     title: "Dung Chumok Bakat Chigui",
     subtitle: "Golpe hacia fuera con reverso del puno",
     reviewStatus: "needs-master-review",
@@ -362,7 +362,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "yop-jirugui",
-    imageUrl: "/techniques/yop-jirugui-v1.png",
+    imageUrl: "/techniques/yop-jirugui-v1.webp",
     title: "Yop Jirugui",
     subtitle: "Puno lateral",
     reviewStatus: "needs-master-review",
@@ -371,7 +371,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "ap-chagui",
-    imageUrl: "/techniques/ap-chagui-v1.png",
+    imageUrl: "/techniques/ap-chagui-v1.webp",
     title: "Ap Chagui",
     subtitle: "Patada frontal",
     reviewStatus: "needs-master-review",
@@ -380,7 +380,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "dollyo-chagui",
-    imageUrl: "/techniques/dollyo-chagui-v1.png",
+    imageUrl: "/techniques/dollyo-chagui-v1.webp",
     title: "Dollyo Chagui",
     subtitle: "Patada circular",
     reviewStatus: "needs-master-review",
@@ -389,7 +389,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "yop-chagui",
-    imageUrl: "/techniques/yop-chagui-v1.png",
+    imageUrl: "/techniques/yop-chagui-v1.webp",
     title: "Yop Chagui",
     subtitle: "Patada lateral",
     reviewStatus: "needs-master-review",
@@ -398,7 +398,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "tuit-chagui",
-    imageUrl: "/techniques/tuit-chagui-v1.png",
+    imageUrl: "/techniques/tuit-chagui-v1.webp",
     title: "Tuit Chagui",
     subtitle: "Patada hacia atras",
     reviewStatus: "needs-master-review",
@@ -407,7 +407,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "nacko-chagui",
-    imageUrl: "/techniques/nacko-chagui-v1.png",
+    imageUrl: "/techniques/nacko-chagui-v1.webp",
     title: "Nacko Chagui",
     subtitle: "Patada en gancho",
     reviewStatus: "needs-master-review",
@@ -416,7 +416,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "furio-chagui",
-    imageUrl: "/techniques/furio-chagui-v1.png",
+    imageUrl: "/techniques/furio-chagui-v1.webp",
     title: "Furio Chagui",
     subtitle: "Patada de latigo",
     reviewStatus: "needs-master-review",
@@ -425,7 +425,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "neryo-chagui",
-    imageUrl: "/techniques/neryo-chagui-v1.png",
+    imageUrl: "/techniques/neryo-chagui-v1.webp",
     title: "Neryo Chagui",
     subtitle: "Patada descendente",
     reviewStatus: "needs-master-review",
@@ -434,7 +434,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "mom-dollyo-yop-chagui",
-    imageUrl: "/techniques/mom-dollyo-yop-chagui-v1.png",
+    imageUrl: "/techniques/mom-dollyo-yop-chagui-v1.webp",
     title: "Mom Dollyo Yop Chagui",
     subtitle: "Patada lateral con giro del cuerpo",
     reviewStatus: "needs-master-review",
@@ -443,7 +443,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "mom-dollyo-tuit-chagui",
-    imageUrl: "/techniques/mom-dollyo-tuit-chagui-v1.png",
+    imageUrl: "/techniques/mom-dollyo-tuit-chagui-v1.webp",
     title: "Mom Dollyo Tuit Chagui",
     subtitle: "Patada atras con giro del cuerpo",
     reviewStatus: "needs-master-review",
@@ -452,7 +452,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "mom-dollyo-nacko-chagui",
-    imageUrl: "/techniques/mom-dollyo-nacko-chagui-v1.png",
+    imageUrl: "/techniques/mom-dollyo-nacko-chagui-v1.webp",
     title: "Mom Dollyo Nacko Chagui",
     subtitle: "Patada de gancho con giro del cuerpo",
     reviewStatus: "needs-master-review",
@@ -461,7 +461,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "mom-dollyo-furio-chagui",
-    imageUrl: "/techniques/mom-dollyo-furio-chagui-v1.png",
+    imageUrl: "/techniques/mom-dollyo-furio-chagui-v1.webp",
     title: "Mom Dollyo Furio Chagui",
     subtitle: "Patada de latigo con giro del cuerpo",
     reviewStatus: "needs-master-review",
@@ -470,7 +470,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "tuio-ap-chagui",
-    imageUrl: "/techniques/tuio-ap-chagui-v1.png",
+    imageUrl: "/techniques/tuio-ap-chagui-v1.webp",
     title: "Tuio Ap Chagui",
     subtitle: "Patada frontal en salto",
     reviewStatus: "needs-master-review",
@@ -479,7 +479,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "tuio-yop-chagui",
-    imageUrl: "/techniques/tuio-yop-chagui-v1.png",
+    imageUrl: "/techniques/tuio-yop-chagui-v1.webp",
     title: "Tuio Yop Chagui",
     subtitle: "Patada lateral en salto",
     reviewStatus: "needs-master-review",
@@ -488,7 +488,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "tuio-tuit-chagui",
-    imageUrl: "/techniques/tuio-tuit-chagui-v1.png",
+    imageUrl: "/techniques/tuio-tuit-chagui-v1.webp",
     title: "Tuio Tuit Chagui",
     subtitle: "Patada atras en salto",
     reviewStatus: "needs-master-review",
@@ -497,7 +497,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "tuio-dollyo-chagui",
-    imageUrl: "/techniques/tuio-dollyo-chagui-v1.png",
+    imageUrl: "/techniques/tuio-dollyo-chagui-v1.webp",
     title: "Tuio Dollyo Chagui",
     subtitle: "Patada circular en salto",
     reviewStatus: "needs-master-review",
@@ -506,7 +506,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "tuio-mom-dollyo-tuit-chagui",
-    imageUrl: "/techniques/tuio-mom-dollyo-tuit-chagui-v1.png",
+    imageUrl: "/techniques/tuio-mom-dollyo-tuit-chagui-v1.webp",
     title: "Tuio Mom Dollyo Tuit Chagui",
     subtitle: "Patada atras en salto con giro",
     reviewStatus: "needs-master-review",
@@ -515,7 +515,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "tuio-mom-dollyo-yop-chagui",
-    imageUrl: "/techniques/tuio-mom-dollyo-yop-chagui-v1.png",
+    imageUrl: "/techniques/tuio-mom-dollyo-yop-chagui-v1.webp",
     title: "Tuio Mom Dollyo Yop Chagui",
     subtitle: "Patada lateral en salto con giro",
     reviewStatus: "needs-master-review",
@@ -524,7 +524,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "kibon-chumbi",
-    imageUrl: "/techniques/kibon-chumbi-v1.png",
+    imageUrl: "/techniques/kibon-chumbi-v1.webp",
     title: "Kibon Chumbi",
     subtitle: "Preparacion basica",
     reviewStatus: "needs-master-review",
@@ -533,7 +533,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "chebipum-mok-chigui",
-    imageUrl: "/techniques/chebipum-mok-chigui-v1.png",
+    imageUrl: "/techniques/chebipum-mok-chigui-v1.webp",
     title: "Chebipum Mok Chigui",
     subtitle: "Golpe al cuello en movimiento de golondrina",
     reviewStatus: "needs-master-review",
@@ -542,7 +542,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "momtong-piochok-palkup-chigui",
-    imageUrl: "/techniques/momtong-piochok-palkup-chigui-v1.png",
+    imageUrl: "/techniques/momtong-piochok-palkup-chigui-v1.webp",
     title: "Momtong Piochok Palkup Chigui",
     subtitle: "Golpe de codo al blanco a nivel medio",
     reviewStatus: "needs-master-review",
@@ -551,7 +551,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "bituro-jansonnal-olgul-bakat-maki",
-    imageUrl: "/techniques/bituro-jansonnal-olgul-bakat-maki-v1.png",
+    imageUrl: "/techniques/bituro-jansonnal-olgul-bakat-maki-v1.webp",
     title: "Bituro Jansonnal Olgul Bakat Maki",
     subtitle: "Defensa alta exterior retorcida con canto de una mano",
     reviewStatus: "needs-master-review",
@@ -560,7 +560,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "bo-chumok-chumbi",
-    imageUrl: "/techniques/bo-chumok-chumbi-v1.png",
+    imageUrl: "/techniques/bo-chumok-chumbi-v1.webp",
     title: "Bo Chumok Chumbi",
     subtitle: "Preparacion con puno cubierto",
     reviewStatus: "needs-master-review",
@@ -569,7 +569,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "gawi-maki",
-    imageUrl: "/techniques/gawi-maki-v1.png",
+    imageUrl: "/techniques/gawi-maki-v1.webp",
     title: "Gawi Maki",
     subtitle: "Defensa en tijera",
     reviewStatus: "needs-master-review",
@@ -578,7 +578,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "dangkio-ollyo-murup-chigui",
-    imageUrl: "/techniques/dangkio-ollyo-murup-chigui-v1.png",
+    imageUrl: "/techniques/dangkio-ollyo-murup-chigui-v1.webp",
     title: "Dangkio Ollyo Murup Chigui",
     subtitle: "Rodillazo ascendente agarrando",
     reviewStatus: "needs-master-review",
@@ -587,7 +587,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "piochok-chagui",
-    imageUrl: "/techniques/piochok-chagui-v1.png",
+    imageUrl: "/techniques/piochok-chagui-v1.webp",
     title: "Piochok Chagui",
     subtitle: "Patada al blanco",
     reviewStatus: "needs-master-review",
@@ -596,7 +596,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "oe-santul-maki",
-    imageUrl: "/techniques/oe-santul-maki-v1.png",
+    imageUrl: "/techniques/oe-santul-maki-v1.webp",
     title: "Oe Santul Maki",
     subtitle: "Defensa de montana de un lado",
     reviewStatus: "needs-master-review",
@@ -605,7 +605,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "dangkio-tok-jirugui",
-    imageUrl: "/techniques/dangkio-tok-jirugui-v1.png",
+    imageUrl: "/techniques/dangkio-tok-jirugui-v1.webp",
     title: "Dangkio Tok Jirugui",
     subtitle: "Puno al menton agarrando",
     reviewStatus: "needs-master-review",
@@ -614,7 +614,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "charyot-sogui",
-    imageUrl: "/techniques/charyot-sogui-v1.png",
+    imageUrl: "/techniques/charyot-sogui-v1.webp",
     title: "Charyot Sogui",
     subtitle: "Posicion de atencion",
     reviewStatus: "needs-master-review",
@@ -623,7 +623,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "pionji-sogui",
-    imageUrl: "/techniques/pionji-sogui-v1.png",
+    imageUrl: "/techniques/pionji-sogui-v1.webp",
     title: "Pionji Sogui",
     subtitle: "Posicion preparatoria con pies abiertos",
     reviewStatus: "needs-master-review",
@@ -632,7 +632,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "moa-sogui",
-    imageUrl: "/techniques/moa-sogui-v1.png",
+    imageUrl: "/techniques/moa-sogui-v1.webp",
     title: "Moa Sogui",
     subtitle: "Posicion con pies juntos",
     reviewStatus: "needs-master-review",
@@ -641,7 +641,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "ap-sogui",
-    imageUrl: "/techniques/ap-sogui-v1.png",
+    imageUrl: "/techniques/ap-sogui-v1.webp",
     title: "Ap Sogui",
     subtitle: "Posicion corta hacia delante",
     reviewStatus: "needs-master-review",
@@ -650,7 +650,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "ap-kubi-sogui",
-    imageUrl: "/techniques/ap-kubi-sogui-v1.png",
+    imageUrl: "/techniques/ap-kubi-sogui-v1.webp",
     title: "Ap Kubi Sogui",
     subtitle: "Posicion larga frontal",
     reviewStatus: "needs-master-review",
@@ -659,7 +659,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "chuchum-sogui",
-    imageUrl: "/techniques/chuchum-sogui-v1.png",
+    imageUrl: "/techniques/chuchum-sogui-v1.webp",
     title: "Chuchum Sogui",
     subtitle: "Posicion de jinete",
     reviewStatus: "needs-master-review",
@@ -668,7 +668,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "bom-sogui",
-    imageUrl: "/techniques/bom-sogui-v1.png",
+    imageUrl: "/techniques/bom-sogui-v1.webp",
     title: "Bom Sogui",
     subtitle: "Posicion de tigre",
     reviewStatus: "needs-master-review",
@@ -677,7 +677,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "tuit-kubi-sogui",
-    imageUrl: "/techniques/tuit-kubi-sogui-v1.png",
+    imageUrl: "/techniques/tuit-kubi-sogui-v1.webp",
     title: "Tuit Kubi Sogui",
     subtitle: "Posicion atrasada",
     reviewStatus: "needs-master-review",
@@ -686,7 +686,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "tuit-koa-sogui",
-    imageUrl: "/techniques/tuit-koa-sogui-v1.png",
+    imageUrl: "/techniques/tuit-koa-sogui-v1.webp",
     title: "Tuit Koa Sogui",
     subtitle: "Posicion cruzada por detras",
     reviewStatus: "needs-master-review",
@@ -695,7 +695,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "naranji-sogui",
-    imageUrl: "/techniques/naranji-sogui-v1.png",
+    imageUrl: "/techniques/naranji-sogui-v1.webp",
     title: "Naranji Sogui",
     subtitle: "Posicion paralela",
     reviewStatus: "needs-master-review",
@@ -704,7 +704,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "uen-sogui",
-    imageUrl: "/techniques/uen-sogui-v1.png",
+    imageUrl: "/techniques/uen-sogui-v1.webp",
     title: "Uen Sogui",
     subtitle: "Posicion izquierda",
     reviewStatus: "needs-master-review",
@@ -713,7 +713,7 @@ export const techniqueVisuals: TechniqueVisual[] = [
   },
   {
     techniqueId: "orun-sogui",
-    imageUrl: "/techniques/orun-sogui-v1.png",
+    imageUrl: "/techniques/orun-sogui-v1.webp",
     title: "Orun Sogui",
     subtitle: "Posicion derecha",
     reviewStatus: "needs-master-review",

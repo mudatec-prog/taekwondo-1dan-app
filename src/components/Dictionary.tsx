@@ -73,7 +73,7 @@ export function Dictionary() {
       </div>
 
       {phase === "keywords" && (
-        <div className="-mx-4 flex max-w-[calc(100vw-0px)] gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:max-w-full sm:px-0">
+        <div className="flex min-w-0 max-w-full gap-2 overflow-x-auto pb-1">
           <button
             className={`tap-target shrink-0 rounded border px-3 py-2 text-xs font-black uppercase ${
               groupFilter === "all"

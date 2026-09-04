@@ -38,7 +38,11 @@ export function useLocalProgress() {
   const [progress, setProgress] = useState<ProgressState>(() => readProgress());
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    } catch {
+      // The app should keep working even if storage is unavailable or full.
+    }
   }, [progress]);
 
   const actions = useMemo(

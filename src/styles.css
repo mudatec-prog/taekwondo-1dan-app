@@ -35,6 +35,15 @@ input {
   font: inherit;
 }
 
+button {
+  min-width: 0;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
 button:focus-visible,
 input:focus-visible {
   outline: 3px solid rgba(225, 29, 47, 0.55);
