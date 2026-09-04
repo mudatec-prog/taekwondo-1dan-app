@@ -140,7 +140,7 @@ export function Dashboard({
       <a
         className="tap-target flex items-center justify-between gap-3 rounded border border-combat-red/35 bg-combat-red/10 px-4 py-3 text-left text-sm font-black uppercase text-red-100"
         download
-        href="/downloads/taekwondo-1dan-0.1.0-debug.apk"
+        href="/downloads/taekwondo-1dan-0.1.1-debug.apk"
       >
         <span className="flex min-w-0 items-center gap-3">
           <Download className="shrink-0 text-combat-red" size={18} aria-hidden />

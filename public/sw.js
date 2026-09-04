@@ -1,5 +1,5 @@
-const CACHE_NAME = "taekwondo-1dan-v3";
-const CORE_ASSETS = ["/", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
+const CACHE_NAME = "taekwondo-1dan-v6";
+const CORE_ASSETS = ["/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/apple-touch-icon.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -33,7 +33,15 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (request.mode === "navigate") {
-    event.respondWith(fetch(request).catch(() => caches.match("/")));
+    event.respondWith(
+      fetch(request, { cache: "no-store" }).catch(
+        () =>
+          new Response("Sin conexion. Cierra y vuelve a abrir la app cuando tengas red.", {
+            headers: { "content-type": "text/plain; charset=utf-8" },
+            status: 503,
+          }),
+      ),
+    );
     return;
   }
 
@@ -45,8 +53,15 @@ self.addEventListener("fetch", (event) => {
         }
 
         return fetch(request).then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          const contentType = response.headers.get("content-type") ?? "";
+          const canCache =
+            response.ok && (url.pathname.startsWith("/assets/") || contentType.startsWith("image/"));
+
+          if (canCache) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          }
+
           return response;
         });
       }),

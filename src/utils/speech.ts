@@ -1,5 +1,5 @@
 type NativeSpeechBridge = {
-  speakKorean?: (text: string) => void;
+  speakKorean?: (text: string) => boolean | void;
 };
 
 function getNativeSpeechBridge() {
@@ -15,8 +15,13 @@ function getKoreanVoice() {
 export function speakKorean(text: string) {
   const nativeBridge = getNativeSpeechBridge();
   if (nativeBridge?.speakKorean) {
-    nativeBridge.speakKorean(text);
-    return;
+    try {
+      if (nativeBridge.speakKorean(text) === true) {
+        return;
+      }
+    } catch {
+      // Fall back to the browser voice below.
+    }
   }
 
   if (!("speechSynthesis" in window)) {
