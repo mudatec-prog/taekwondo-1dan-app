@@ -2,7 +2,7 @@ import { Eye, RotateCcw, Volume2, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { dictionary, keywordDictionary, positionDictionary } from "../data/dictionary";
 import type { FlashcardStatus } from "../hooks/useLocalProgress";
-import { preloadKoreanVoices, speakKorean } from "../utils/speech";
+import { preloadKoreanVoices, speakKorean, type KoreanSpeechResult } from "../utils/speech";
 
 type FlashcardsProps = {
   flashcards: Record<string, FlashcardStatus>;
@@ -22,6 +22,7 @@ export function Flashcards({ flashcards, onMark, onReset }: FlashcardsProps) {
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [deckId, setDeckId] = useState<DeckId>("keywords");
+  const [speechResult, setSpeechResult] = useState<KoreanSpeechResult | null>(null);
   const deck = deckId === "keywords" ? keywordDictionary : deckId === "positions" ? positionDictionary : dictionary;
 
   useEffect(() => {
@@ -48,12 +49,19 @@ export function Flashcards({ flashcards, onMark, onReset }: FlashcardsProps) {
     setDeckId(nextDeckId);
     setIndex(0);
     setRevealed(false);
+    setSpeechResult(null);
   }
 
   function mark(status: FlashcardStatus) {
     onMark(card.id, status);
     setRevealed(false);
+    setSpeechResult(null);
     setIndex((current) => (current + 1) % studyQueue.length);
+  }
+
+  async function playCard() {
+    setSpeechResult({ ok: true, source: "none", message: "Preparando audio..." });
+    setSpeechResult(await speakKorean(card.speech ?? card.korean));
   }
 
   return (
@@ -101,11 +109,22 @@ export function Flashcards({ flashcards, onMark, onReset }: FlashcardsProps) {
           {card.speech && <p className="mt-3 text-3xl font-black text-combat-red">{card.speech}</p>}
           <button
             className="tap-target mx-auto mt-5 rounded border border-combat-red/45 bg-combat-red/15 px-4 py-3 font-black uppercase text-red-100"
-            onClick={() => speakKorean(card.speech ?? card.korean)}
+            onClick={() => void playCard()}
             type="button"
           >
             <Volume2 className="inline" size={18} aria-hidden /> Escuchar
           </button>
+          {speechResult && (
+            <p
+              className={`mx-auto mt-3 max-w-xl rounded border px-3 py-2 text-sm font-bold ${
+                speechResult.ok
+                  ? "border-white/10 bg-white/[0.04] text-white/68"
+                  : "border-combat-red/45 bg-combat-red/15 text-red-100"
+              }`}
+            >
+              {speechResult.message}
+            </p>
+          )}
           {revealed && (
             <div className="mt-6">
               <p className="text-sm font-bold uppercase text-white/45">Debes reconocer y ejecutar</p>

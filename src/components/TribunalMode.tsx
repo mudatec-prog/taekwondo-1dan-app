@@ -2,7 +2,7 @@ import { CheckCircle2, RotateCcw, Shuffle, Timer, Volume2, XCircle } from "lucid
 import { useEffect, useMemo, useState } from "react";
 import { keywordDictionary, techniqueDictionary, type DictionaryEntry } from "../data/dictionary";
 import type { TribunalResult, TribunalStats } from "../hooks/useLocalProgress";
-import { preloadKoreanVoices, speakKorean } from "../utils/speech";
+import { preloadKoreanVoices, speakKorean, type KoreanSpeechResult } from "../utils/speech";
 
 type TribunalDeckId = "keywords" | "positions" | "defenses" | "attacks" | "kicks" | "weak";
 
@@ -64,6 +64,7 @@ export function TribunalMode({ stats, onRecordResult }: TribunalModeProps) {
   const [revealed, setRevealed] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
   const [isRunning, setIsRunning] = useState(false);
+  const [speechResult, setSpeechResult] = useState<KoreanSpeechResult | null>(null);
 
   const deckStats = useMemo(() => {
     const attempts = deckItems.reduce(
@@ -97,14 +98,20 @@ export function TribunalMode({ stats, onRecordResult }: TribunalModeProps) {
     return () => window.clearTimeout(timeout);
   }, [isRunning, secondsLeft]);
 
+  async function playKorean(text: string) {
+    setSpeechResult({ ok: true, source: "none", message: "Preparando audio..." });
+    setSpeechResult(await speakKorean(text));
+  }
+
   function nextCommand(shouldSpeak = true) {
     const next = pickWeighted(deckItems, stats);
     setCurrent(next);
     setRevealed(false);
     setSecondsLeft(5);
     setIsRunning(true);
+    setSpeechResult(null);
     if (shouldSpeak) {
-      window.setTimeout(() => speakKorean(next.speech ?? next.korean), 100);
+      window.setTimeout(() => void playKorean(next.speech ?? next.korean), 100);
     }
   }
 
@@ -115,6 +122,7 @@ export function TribunalMode({ stats, onRecordResult }: TribunalModeProps) {
     setRevealed(false);
     setSecondsLeft(5);
     setIsRunning(false);
+    setSpeechResult(null);
   }
 
   function record(result: TribunalResult) {
@@ -174,7 +182,7 @@ export function TribunalMode({ stats, onRecordResult }: TribunalModeProps) {
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <button
               className="tap-target rounded border border-combat-red/45 bg-combat-red/15 px-4 py-3 font-black uppercase text-red-100"
-              onClick={() => speakKorean(current.speech ?? current.korean)}
+              onClick={() => void playKorean(current.speech ?? current.korean)}
               type="button"
             >
               <Volume2 className="inline" size={18} aria-hidden /> Escuchar
@@ -187,6 +195,18 @@ export function TribunalMode({ stats, onRecordResult }: TribunalModeProps) {
               {revealed ? "Ocultar ayuda" : "Ver significado"}
             </button>
           </div>
+
+          {speechResult && (
+            <p
+              className={`mx-auto mt-3 max-w-xl rounded border px-3 py-2 text-sm font-bold ${
+                speechResult.ok
+                  ? "border-white/10 bg-white/[0.04] text-white/68"
+                  : "border-combat-red/45 bg-combat-red/15 text-red-100"
+              }`}
+            >
+              {speechResult.message}
+            </p>
+          )}
 
           {revealed && (
             <div className="mt-5 rounded border border-white/10 bg-white/[0.04] p-4">

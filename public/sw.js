@@ -1,4 +1,4 @@
-const CACHE_NAME = "taekwondo-1dan-v6";
+const CACHE_NAME = "taekwondo-1dan-v7";
 const CORE_ASSETS = ["/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/apple-touch-icon.png"];
 
 self.addEventListener("install", (event) => {

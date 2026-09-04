@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useMemo, useState } from "react";
 import { dictionary } from "../data/dictionary";
 import { keyTermGroups, type KeyTerm } from "../data/keyTerms";
-import { preloadKoreanVoices, speakKorean } from "../utils/speech";
+import { preloadKoreanVoices, speakKorean, type KoreanSpeechResult } from "../utils/speech";
 
 type DictionaryPhase = "keywords" | "techniques";
 type GroupFilter = "all" | KeyTerm["group"];
@@ -12,6 +12,7 @@ export function Dictionary() {
   const [query, setQuery] = useState("");
   const [phase, setPhase] = useState<DictionaryPhase>("keywords");
   const [groupFilter, setGroupFilter] = useState<GroupFilter>("all");
+  const [speechResult, setSpeechResult] = useState<KoreanSpeechResult | null>(null);
   const normalizedQuery = query.trim().toLowerCase();
 
   useEffect(() => {
@@ -35,6 +36,11 @@ export function Dictionary() {
   function selectPhase(nextPhase: DictionaryPhase) {
     setPhase(nextPhase);
     setGroupFilter("all");
+  }
+
+  async function playKorean(text: string) {
+    setSpeechResult({ ok: true, source: "none", message: "Preparando audio..." });
+    setSpeechResult(await speakKorean(text));
   }
 
   return (
@@ -112,6 +118,18 @@ export function Dictionary() {
         />
       </label>
 
+      {speechResult && (
+        <p
+          className={`rounded border px-3 py-2 text-sm font-bold ${
+            speechResult.ok
+              ? "border-white/10 bg-white/[0.04] text-white/68"
+              : "border-combat-red/45 bg-combat-red/15 text-red-100"
+          }`}
+        >
+          {speechResult.message}
+        </p>
+      )}
+
       <div className="grid min-w-0 gap-3 sm:grid-cols-2">
         {results.map((entry) => (
           <article key={entry.id} className="min-w-0 rounded border border-white/10 bg-white/[0.04] p-4">
@@ -125,7 +143,7 @@ export function Dictionary() {
                 <button
                   aria-label={`Reproducir ${entry.korean}`}
                   className="tap-target flex w-full items-center justify-center gap-2 rounded border border-combat-red/45 bg-combat-red/15 px-3 py-3 font-black uppercase text-red-100 min-[420px]:w-auto"
-                  onClick={() => speakKorean(entry.speech ?? entry.korean)}
+                  onClick={() => void playKorean(entry.speech ?? entry.korean)}
                   type="button"
                 >
                   <Volume2 size={20} aria-hidden />
