@@ -1,3 +1,11 @@
+type NativeSpeechBridge = {
+  speakKorean?: (text: string) => void;
+};
+
+function getNativeSpeechBridge() {
+  return (window as Window & { TaekwondoAndroid?: NativeSpeechBridge }).TaekwondoAndroid;
+}
+
 function getKoreanVoice() {
   return window.speechSynthesis
     .getVoices()
@@ -5,6 +13,12 @@ function getKoreanVoice() {
 }
 
 export function speakKorean(text: string) {
+  const nativeBridge = getNativeSpeechBridge();
+  if (nativeBridge?.speakKorean) {
+    nativeBridge.speakKorean(text);
+    return;
+  }
+
   if (!("speechSynthesis" in window)) {
     globalThis.alert?.("Este navegador no permite reproducir voz con speechSynthesis.");
     return;
