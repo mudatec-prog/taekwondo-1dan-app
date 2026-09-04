@@ -1,4 +1,4 @@
-import { Award, BookOpen, CheckCircle2, ClipboardCheck, Dumbbell, Layers, Map, RotateCcw, Search, Siren, Target } from "lucide-react";
+import { Award, BookOpen, CheckCircle2, ClipboardCheck, Download, Dumbbell, Layers, Map, RotateCcw, Search, Siren, Target } from "lucide-react";
 import { checklistItems, syllabusBlocks } from "../data/examData";
 import type { FlashcardStatus } from "../hooks/useLocalProgress";
 
@@ -136,6 +136,18 @@ export function Dashboard({
         <SecondaryAction icon={Siren} label="Modo tribunal" onClick={onOpenTribunal} />
         <SecondaryAction icon={ClipboardCheck} label="Checklist tecnico" onClick={onOpenChecklist} />
       </div>
+
+      <a
+        className="tap-target flex items-center justify-between gap-3 rounded border border-combat-red/35 bg-combat-red/10 px-4 py-3 text-left text-sm font-black uppercase text-red-100"
+        download
+        href="/downloads/taekwondo-1dan-0.1.0-debug.apk"
+      >
+        <span className="flex min-w-0 items-center gap-3">
+          <Download className="shrink-0 text-combat-red" size={18} aria-hidden />
+          <span className="truncate">Descargar app Android</span>
+        </span>
+        <span className="text-combat-red">APK</span>
+      </a>
     </section>
   );
 }
