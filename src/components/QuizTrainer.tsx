@@ -5,7 +5,6 @@ import { createQuestions, DAILY_GOAL, localDay, matchesKorean, type AnswerEvent,
 import { speakKorean, stopKoreanSpeech } from "../utils/speech";
 import { recognizeKorean, voiceSupport } from "../utils/recognition";
 
-export const ANDROID_DOWNLOAD = "https://raw.githubusercontent.com/mudatec-prog/taekwondo-1dan-app/main/public/downloads/taekwondo-1dan-0.1.4-debug.apk";
 type Mode = "mixed" | QuizMode;
 type Feedback = { correct: boolean; answer: string; day: string };
 type Session = { id: string; queue: Question[]; index: number; answers: Feedback[]; feedback: Feedback | null; deck: DeckId; mode: Mode };
@@ -162,6 +161,7 @@ export function QuizTrainer({ learning, onAnswer, tribunal = false }: Props) {
   }
 
   const isWrite = question.mode === "write" || voiceFallback;
+  const keyboardVoice = question.mode === "speak" && !voiceFallback && support === "keyboard";
   const audioQuestion = question.mode === "listen" && !showWord;
   const canAnswerChoice = question.mode !== "listen" || heard || showWord;
   return <section className="quiz-shell space-y-5">
@@ -185,15 +185,15 @@ export function QuizTrainer({ learning, onAnswer, tribunal = false }: Props) {
       </button>
     ))}</div>}
 
-    {isWrite && <form onSubmit={(event) => { event.preventDefault(); if (input.trim()) submit(input, matchesKorean(entry, input)); }} className="space-y-3">
+    {(isWrite || keyboardVoice) && <form onSubmit={(event) => { event.preventDefault(); if (input.trim()) submit(input, matchesKorean(entry, input)); }} className="space-y-3">
+      {keyboardVoice && <p className="text-sm leading-relaxed text-white/65">Toca el campo y usa el microfono de tu teclado en coreano. Si no tienes dictado, puedes escribir.</p>}
       <label className="sr-only" htmlFor="quiz-answer">Tu respuesta en coreano</label>
-      <input id="quiz-answer" className="quiz-select" placeholder="Romanizado o hangul" autoComplete="off" autoCapitalize="none" spellCheck={false} value={input} disabled={Boolean(feedback)} onChange={(event) => setInput(event.target.value)} />
+      <input id="quiz-answer" className="quiz-select" placeholder={keyboardVoice ? "Tu palabra dictada o escrita" : "Romanizado o hangul"} lang={keyboardVoice ? "ko" : undefined} autoComplete="off" autoCapitalize="none" spellCheck={false} value={input} disabled={Boolean(feedback)} onChange={(event) => setInput(event.target.value)} />
       {!feedback && <button className="quiz-primary" disabled={!input.trim()} type="submit">Comprobar <Check size={20} /></button>}
     </form>}
 
-    {question.mode === "speak" && !voiceFallback && !feedback && <div className="space-y-3">
-      {(support === "native" || support === "browser") ? <button className={`quiz-primary ${listening ? "listening" : ""}`} onClick={() => listening ? controller.current?.abort() : void listen()}><Mic size={22} />{listening ? "Cancelar escucha" : voiceMiss ? "Reintentar" : "Hablar"}</button>
-        : <div className="text-sm text-white/65">{support === "update" ? <a className="underline" href={ANDROID_DOWNLOAD}>Actualizar Android para practicar hablando</a> : "Este navegador no reconoce voz. Puedes responder por escrito."}</div>}
+    {question.mode === "speak" && !voiceFallback && !keyboardVoice && !feedback && <div className="space-y-3">
+      <button className={`quiz-primary ${listening ? "listening" : ""}`} onClick={() => listening ? controller.current?.abort() : void listen()}><Mic size={22} />{listening ? "Cancelar escucha" : voiceMiss ? "Reintentar" : "Hablar"}</button>
       <p className="text-xs leading-relaxed text-white/45">Reconocimiento de palabras, no evaluacion del acento. Puede usar internet.</p>
       {voiceMiss && <p role="status" className="text-sm text-white/80">He entendido: <span lang="ko">{transcript}</span>. No coincide con {entry.speech}. Escucha el modelo y prueba de nuevo.</p>}
       <button className="quiz-secondary" disabled={listening} onClick={() => { setVoiceFallback(true); setTranscript(""); setMessage(""); }}>Responder por escrito</button>
@@ -202,7 +202,7 @@ export function QuizTrainer({ learning, onAnswer, tribunal = false }: Props) {
     {message && <div role="status" className="text-sm leading-relaxed text-white/65">{message}{audioQuestion && !heard && <button className="mt-2 block underline" onClick={() => setShowWord(true)}>Continuar leyendo la palabra</button>}</div>}
     {!feedback && <button className="quiz-skip" disabled={listening} onClick={() => submit("", false)}>No recuerdo</button>}
     {feedback && <div ref={feedbackRef} className={`quiz-feedback ${feedback.correct ? "success" : ""}`} role="status">
-      <div className="flex items-center gap-2 font-bold">{feedback.correct ? <Check size={20} /> : <RotateCcw size={20} />}{feedback.correct ? question.mode === "speak" && !voiceFallback ? "Palabra reconocida" : "Correcto" : "Vamos a fijarla"}<span className="ml-auto text-sm">+{feedback.correct ? question.retry ? 5 : 10 : 2} XP</span></div>
+      <div className="flex items-center gap-2 font-bold">{feedback.correct ? <Check size={20} /> : <RotateCcw size={20} />}{feedback.correct ? question.mode === "speak" && !voiceFallback && !keyboardVoice ? "Palabra reconocida" : "Correcto" : "Vamos a fijarla"}<span className="ml-auto text-sm">+{feedback.correct ? question.retry ? 5 : 10 : 2} XP</span></div>
       <p className="mt-2 font-bold">{entry.korean} <span className="font-normal text-white/65">{entry.spanish}</span></p>
       {!feedback.correct && feedback.answer && <p className="mt-1 break-words text-sm text-white/50">Tu respuesta: {feedback.answer}</p>}
       {question.mode === "speak" && !voiceFallback && transcript && <p className="mt-1 text-sm" lang="ko">{transcript}</p>}

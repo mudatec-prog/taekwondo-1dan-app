@@ -1,7 +1,6 @@
-import { ArrowRight, BookOpen, CalendarDays, Check, ClipboardCheck, Download, Flame, Headphones, Map, Target, Zap } from "lucide-react";
+import { ArrowRight, BookOpen, CalendarDays, Check, ClipboardCheck, Flame, Headphones, Map, Target, Zap } from "lucide-react";
 import { dictionary } from "../data/dictionary";
 import { localDay, shiftDay, streak, DAILY_GOAL, type LearningState } from "../utils/learning";
-import { ANDROID_DOWNLOAD } from "./QuizTrainer";
 
 type Props = {
   learning: LearningState;
@@ -53,7 +52,6 @@ export function Dashboard(props: Props) {
     <div className="flex flex-wrap gap-x-5 gap-y-2 border-t border-white/10 pt-4">
       <button className="quiet-link" onClick={props.onOpenSyllabus}><BookOpen size={16} />Temario</button>
       <button className="quiet-link" onClick={props.onOpenChecklist}><ClipboardCheck size={16} />Checklist</button>
-      <a className="quiet-link" href={ANDROID_DOWNLOAD}><Download size={16} />Actualizar Android</a>
     </div>
   </section>;
 }

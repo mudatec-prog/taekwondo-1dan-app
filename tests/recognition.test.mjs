@@ -5,7 +5,7 @@ import { build } from 'esbuild';
 
 const bundle = await build({ entryPoints: ['src/utils/recognition.ts'], bundle: true, write: false, format: 'cjs', platform: 'node' });
 
-function setup(native = false) {
+function setup(native = false, legacy = false) {
   let requestId;
   let stopped = 0;
   const window = new EventTarget();
@@ -17,6 +17,7 @@ function setup(native = false) {
     stopSpeech: () => { stopped++; },
     cancelRecognition: () => {},
   };
+  else if (legacy) window.TaekwondoAndroid = { stopSpeech: () => {} };
   const context = vm.createContext({ module: { exports: {} }, window, navigator: { userAgent: '' }, clearTimeout: (id) => timers.delete(id) });
   vm.runInContext(bundle.outputFiles[0].text, context);
   return {
@@ -32,10 +33,15 @@ function setup(native = false) {
 
 test('voice-unavailable browsers keep a written-answer fallback', async () => {
   const env = setup();
-  assert.equal(env.voiceSupport(), 'unavailable');
+  assert.equal(env.voiceSupport(), 'keyboard');
   const result = await env.recognizeKorean(new AbortController().signal);
   assert.equal(result.transcripts.length, 0);
   assert.ok(result.error);
+});
+
+test('the installed Android app can use keyboard dictation without an APK update', () => {
+  const env = setup(false, true);
+  assert.equal(env.voiceSupport(), 'keyboard');
 });
 
 test('native recognition stops the model audio and returns alternatives', async () => {

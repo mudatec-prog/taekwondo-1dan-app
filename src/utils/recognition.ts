@@ -14,11 +14,11 @@ type VoiceWindow = Window & {
   webkitSpeechRecognition?: new () => Recognition;
 };
 
-export function voiceSupport(): "native" | "browser" | "update" | "unavailable" {
+export function voiceSupport(): "native" | "browser" | "keyboard" {
   const host = window as VoiceWindow;
   if (host.TaekwondoAndroid?.recognizeKorean) return "native";
-  if (host.TaekwondoAndroid || /Taekwondo1DanAndroid\//.test(navigator.userAgent)) return "update";
-  return host.SpeechRecognition || host.webkitSpeechRecognition ? "browser" : "unavailable";
+  if (host.TaekwondoAndroid || /Taekwondo1DanAndroid\//.test(navigator.userAgent)) return "keyboard";
+  return host.SpeechRecognition || host.webkitSpeechRecognition ? "browser" : "keyboard";
 }
 
 export function recognizeKorean(signal: AbortSignal): Promise<RecognitionResult> {
