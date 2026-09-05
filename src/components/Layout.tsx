@@ -45,24 +45,20 @@ export function Layout({ activeView, onViewChange, children }: LayoutProps) {
   return (
     <div ref={layoutRef} className="app-layout w-full text-combat-white">
       <header className="shrink-0 border-b border-white/10 bg-combat-black/90 backdrop-blur md:sticky md:top-0 md:z-20">
-        <div className="mx-auto flex w-full max-w-[680px] items-center justify-between px-4 py-4 md:max-w-6xl md:px-6">
+        <div className="mx-auto flex w-full max-w-[680px] items-center justify-between px-4 py-2 md:max-w-6xl md:px-6">
           <button
             aria-label="Ir al inicio"
             className="flex min-w-0 items-center gap-3 text-left"
             onClick={() => onViewChange("dashboard")}
             type="button"
           >
-            <span className="grid h-12 w-12 shrink-0 place-items-center rounded border border-combat-red bg-combat-red text-lg font-black shadow-glow">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded bg-combat-red text-sm font-black">
               1D
             </span>
             <span className="min-w-0">
-              <span className="block text-[0.68rem] font-black uppercase tracking-[0.18em] text-combat-red">Black belt prep</span>
-              <span className="block truncate text-lg font-black uppercase leading-tight">Taekwondo 1er DAN</span>
+              <span className="block truncate text-sm font-bold">Taekwondo 1er DAN</span>
             </span>
           </button>
-          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-sm font-black text-white/75">
-            JM
-          </div>
         </div>
       </header>
 
@@ -102,7 +98,7 @@ export function Layout({ activeView, onViewChange, children }: LayoutProps) {
               aria-label={label}
               className={`tap-target flex min-w-0 flex-col items-center justify-center rounded border px-1 py-2 text-[0.65rem] font-black uppercase ${
                 activeView === id
-                  ? "border-combat-red bg-combat-red text-white shadow-glow"
+                  ? "border-transparent bg-white/[0.06] text-combat-red"
                   : "border-transparent text-white/64"
               }`}
               onClick={() => onViewChange(id)}

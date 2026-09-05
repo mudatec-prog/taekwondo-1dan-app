@@ -5,6 +5,7 @@ export type KoreanSpeechResult = {
 };
 
 type NativeSpeechBridge = {
+  stopSpeech?: () => void;
   speakKoreanWithId?: (text: string, requestId: string) => void;
   speakKorean?: (text: string) => unknown;
 };
@@ -108,4 +109,11 @@ export function speakKorean(text: string): Promise<KoreanSpeechResult> {
 
 export function preloadKoreanVoices() {
   if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
+}
+
+export function stopKoreanSpeech() {
+  cancelPending?.();
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  activeUtterance = undefined;
+  try { (window as Window & { TaekwondoAndroid?: NativeSpeechBridge }).TaekwondoAndroid?.stopSpeech?.(); } catch { /* The old app has no stop method. */ }
 }

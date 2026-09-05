@@ -3,11 +3,10 @@ import { Checklist } from "./components/Checklist";
 import { Dashboard } from "./components/Dashboard";
 import { Dictionary } from "./components/Dictionary";
 import { ExamSimulator } from "./components/ExamSimulator";
-import { Flashcards } from "./components/Flashcards";
+import { QuizTrainer } from "./components/QuizTrainer";
 import { Layout, type ViewId } from "./components/Layout";
 import { PoomsaeTrainer } from "./components/PoomsaeTrainer";
 import { SyllabusBlock } from "./components/SyllabusBlock";
-import { TribunalMode } from "./components/TribunalMode";
 import { syllabusBlocks } from "./data/examData";
 import { useLocalProgress } from "./hooks/useLocalProgress";
 
@@ -15,20 +14,17 @@ export default function App() {
   const [activeView, setActiveView] = useState<ViewId>("dashboard");
   const {
     progress,
-    markFlashcard,
-    resetFlashcards,
     toggleChecklist,
     resetChecklist,
     togglePoomsaeStep,
-    recordTribunalResult,
+    recordQuizAnswer,
   } = useLocalProgress();
 
   return (
     <Layout activeView={activeView} onViewChange={setActiveView}>
       {activeView === "dashboard" && (
         <Dashboard
-          flashcards={progress.flashcards}
-          checklist={progress.checklist}
+          learning={progress.learning}
           onStartDictionary={() => setActiveView("dictionary")}
           onStartFlashcards={() => setActiveView("flashcards")}
           onStartPoomsae={() => setActiveView("poomsae")}
@@ -40,17 +36,10 @@ export default function App() {
       )}
       {activeView === "dictionary" && <Dictionary />}
       {activeView === "flashcards" && (
-        <Flashcards
-          flashcards={progress.flashcards}
-          onMark={markFlashcard}
-          onReset={resetFlashcards}
-        />
+        <QuizTrainer key="practice" learning={progress.learning} onAnswer={recordQuizAnswer} />
       )}
       {activeView === "tribunal" && (
-        <TribunalMode
-          stats={progress.tribunal}
-          onRecordResult={recordTribunalResult}
-        />
+        <QuizTrainer key="tribunal" tribunal learning={progress.learning} onAnswer={recordQuizAnswer} />
       )}
       {activeView === "syllabus" && (
         <SyllabusBlock blocks={syllabusBlocks} flashcards={progress.flashcards} />

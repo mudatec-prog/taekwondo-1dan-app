@@ -51,11 +51,8 @@ export function Dictionary() {
   return (
     <section className="min-w-0 max-w-full overflow-hidden space-y-4">
       <div className="min-w-0">
-        <p className="text-sm font-bold uppercase tracking-[0.22em] text-combat-red">Coreano - Espanol</p>
-        <h2 className="mt-1 text-3xl font-black uppercase">Diccionario tecnico</h2>
-        <p className="mt-2 max-w-2xl text-sm text-white/62">
-          Empieza por las palabras base: defensa, ataque, puno, alto, bajo, giro. Luego las tecnicas largas dejan de parecer un bloque raro.
-        </p>
+        <p className="eyebrow">Coreano - Espanol</p>
+        <h2 className="screen-title">Diccionario</h2>
       </div>
 
       <div className="grid min-w-0 grid-cols-2 gap-2">
