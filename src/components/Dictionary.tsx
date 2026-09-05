@@ -1,5 +1,5 @@
 import { Search, Volume2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useMemo, useState } from "react";
 import { dictionary } from "../data/dictionary";
 import { keyTermGroups, type KeyTerm } from "../data/keyTerms";
@@ -13,6 +13,8 @@ export function Dictionary() {
   const [phase, setPhase] = useState<DictionaryPhase>("keywords");
   const [groupFilter, setGroupFilter] = useState<GroupFilter>("all");
   const [speechResult, setSpeechResult] = useState<KoreanSpeechResult | null>(null);
+  const [speechEntryId, setSpeechEntryId] = useState<string | null>(null);
+  const speechRequest = useRef(0);
   const normalizedQuery = query.trim().toLowerCase();
 
   useEffect(() => {
@@ -38,9 +40,12 @@ export function Dictionary() {
     setGroupFilter("all");
   }
 
-  async function playKorean(text: string) {
+  async function playKorean(id: string, text: string) {
+    const request = ++speechRequest.current;
+    setSpeechEntryId(id);
     setSpeechResult({ ok: true, source: "none", message: "Preparando audio..." });
-    setSpeechResult(await speakKorean(text));
+    const result = await speakKorean(text);
+    if (request === speechRequest.current) setSpeechResult(result);
   }
 
   return (
@@ -118,18 +123,6 @@ export function Dictionary() {
         />
       </label>
 
-      {speechResult && (
-        <p
-          className={`rounded border px-3 py-2 text-sm font-bold ${
-            speechResult.ok
-              ? "border-white/10 bg-white/[0.04] text-white/68"
-              : "border-combat-red/45 bg-combat-red/15 text-red-100"
-          }`}
-        >
-          {speechResult.message}
-        </p>
-      )}
-
       <div className="grid min-w-0 gap-3 sm:grid-cols-2">
         {results.map((entry) => (
           <article key={entry.id} className="min-w-0 rounded border border-white/10 bg-white/[0.04] p-4">
@@ -143,7 +136,7 @@ export function Dictionary() {
                 <button
                   aria-label={`Reproducir ${entry.korean}`}
                   className="tap-target flex w-full items-center justify-center gap-2 rounded border border-combat-red/45 bg-combat-red/15 px-3 py-3 font-black uppercase text-red-100 min-[420px]:w-auto"
-                  onClick={() => void playKorean(entry.speech ?? entry.korean)}
+                  onClick={() => void playKorean(entry.id, entry.speech ?? entry.korean)}
                   type="button"
                 >
                   <Volume2 size={20} aria-hidden />
@@ -153,6 +146,11 @@ export function Dictionary() {
                   {entry.category}
                 </span>
               </div>
+              {speechEntryId === entry.id && speechResult && (
+                <p role="status" className={`break-words text-sm ${speechResult.ok ? "text-white/70" : "text-red-200"}`}>
+                  {speechResult.message}
+                </p>
+              )}
             </div>
           </article>
         ))}

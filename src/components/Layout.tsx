@@ -25,14 +25,25 @@ const secondaryNavItems: Array<{ id: ViewId; label: string; icon: typeof Home }>
 
 export function Layout({ activeView, onViewChange, children }: LayoutProps) {
   const allDesktopItems = [...primaryNavItems, ...secondaryNavItems];
-  const mainRef = useRef<HTMLElement>(null);
+  const layoutRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    mainRef.current?.scrollTo({ top: 0, left: 0 });
+    window.scrollTo({ top: 0, left: 0 });
   }, [activeView]);
 
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const measure = () => layoutRef.current?.style.setProperty("--bottom-nav-height", `${nav.getBoundingClientRect().height}px`);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(nav);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="flex h-dvh w-full flex-col overflow-hidden text-combat-white md:block md:h-auto md:min-h-dvh md:overflow-x-hidden md:overflow-y-visible">
+    <div ref={layoutRef} className="app-layout w-full text-combat-white">
       <header className="shrink-0 border-b border-white/10 bg-combat-black/90 backdrop-blur md:sticky md:top-0 md:z-20">
         <div className="mx-auto flex w-full max-w-[680px] items-center justify-between px-4 py-4 md:max-w-6xl md:px-6">
           <button
@@ -55,7 +66,7 @@ export function Layout({ activeView, onViewChange, children }: LayoutProps) {
         </div>
       </header>
 
-      <div className="mx-auto flex w-full max-w-[680px] min-w-0 flex-1 gap-0 overflow-hidden px-4 md:grid md:max-w-6xl md:grid-cols-[13rem_1fr] md:gap-6 md:overflow-visible md:px-6 md:pb-8 md:pt-6">
+      <div className="mx-auto w-full max-w-[680px] min-w-0 px-4 md:grid md:max-w-6xl md:grid-cols-[13rem_1fr] md:gap-6 md:px-6 md:pb-8 md:pt-6">
         <nav className="hidden md:block">
           <div className="sticky top-6 space-y-2">
             {allDesktopItems.map(({ id, label, icon: Icon }) => (
@@ -77,14 +88,13 @@ export function Layout({ activeView, onViewChange, children }: LayoutProps) {
         </nav>
 
         <main
-          ref={mainRef}
-          className="min-w-0 flex-1 overflow-y-auto pb-5 pt-5 [-webkit-overflow-scrolling:touch] md:overflow-visible md:pb-0 md:pt-0"
+          className="min-w-0 pb-5 pt-5 md:pb-0 md:pt-0"
         >
           {children}
         </main>
       </div>
 
-      <nav className="mx-auto w-full max-w-[680px] shrink-0 overflow-hidden border-t border-white/10 bg-combat-black/96 px-2 pb-[calc(0.55rem+env(safe-area-inset-bottom))] pt-2 backdrop-blur md:hidden">
+      <nav ref={navRef} aria-label="Navegacion principal" className="fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-[680px] border-t border-white/10 bg-combat-black px-2 pb-[calc(0.55rem+env(safe-area-inset-bottom))] pt-2 md:hidden">
         <div className="grid min-w-0 grid-cols-5 gap-1.5">
           {primaryNavItems.map(({ id, label, icon: Icon }) => (
             <button
